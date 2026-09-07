@@ -148,9 +148,10 @@ Mechanics:
   address bar and costs a round trip. Flat output (`permalink:
   /leaguerules.html` → `_site/leaguerules.html`) is served directly at
   `/leaguerules` by Pages' extensionless lookup, with no redirect and the URL
-  unchanged. Confirm that lookup behaviour in Phase 0 with a throwaway page
-  before committing to it; if it does not hold, fall back to directory-style
-  permalinks and accept the 301.
+  unchanged. **Confirmed on 2026-09-07** with a throwaway `/probe.html`
+  deployed to `soccer-5.github.io/Soccer-5-Website/`: `GET /probe` → 200, no
+  `Location` header, URL unchanged. Flat permalinks are the standard for
+  every page.
 - File names in `content/` stay readable (`uniform-info.md`) while the
   permalink stays legacy (`/uniforminfo`). Document the pairing in
   `CONTRIBUTING-DEV.md` so nobody "fixes" it later.
@@ -417,16 +418,21 @@ Design the data layer in Phase 2 so swapping the source is a one-file change.
 
 ### Phase 0 — Repo bootstrap
 - Create repo in the league's GitHub org. Public. `main` as default branch.
+  Done: org `Soccer-5`, repo `Soccer-5-Website`, served at
+  `https://soccer-5.github.io/Soccer-5-Website/` until the domain cutover.
+  Because that is a project-pages subpath, the build takes a `PATH_PREFIX`
+  env var (from `configure-pages`' `base_path`) and every internal link in a
+  template must go through Eleventy's `url` filter. At cutover the prefix
+  becomes empty and nothing else changes.
 - `npm init`, install `@11ty/eleventy`, `csv-parse`. Pin Node in `.nvmrc`.
 - `eleventy.config.js`: input `.`, includes `src/_includes`, output `_site`,
   ignore `README.md`, `CONTRIBUTING-DEV.md`, `DESIGN.md`, `CLAUDE.md`,
   `_design/`. Passthrough copy `assets/`, `src/css/`, `src/js/`, and
   `assets/s/` → `/s/` (legacy asset paths, §4.1).
 - Hello-world page builds and serves locally with `npx @11ty/eleventy --serve`.
-- **Verify extensionless URL serving on GitHub Pages** (§4.1): deploy a
-  throwaway `probe.html` and confirm `https://<org>.github.io/<repo>/probe`
-  returns 200 without a redirect. This decides the permalink style for every
-  page, so settle it before writing content. Delete the probe afterwards.
+- ~~**Verify extensionless URL serving on GitHub Pages**~~ (§4.1). Done
+  2026-09-07: `/probe` returned 200 with no redirect. Flat permalinks
+  (`permalink: /leaguerules.html`) confirmed for every page. Probe deleted.
 - `.github/workflows/deploy.yml` using `actions/configure-pages`,
   `actions/upload-pages-artifact`, `actions/deploy-pages`. Trigger on push
   to `main` and `workflow_dispatch`. Concurrency group so overlapping commits
