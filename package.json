@@ -1,0 +1,21 @@
+{
+  "name": "soccer-5-website",
+  "version": "1.0.0",
+  "description": "Soccer-5 League Website",
+  "private": true,
+  "license": "ISC",
+  "type": "module",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve",
+    "clean": "rm -rf _site"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Soccer-5/Soccer-5-Website.git"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "csv-parse": "^7.0.2"
+  }
+}

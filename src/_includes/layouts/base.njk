@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }} &mdash; {{ site.title }}</title>
+    {%- if description %}
+    <meta name="description" content="{{ description }}">
+    {%- endif %}
+    <link rel="stylesheet" href="{{ '/css/site.css' | url }}">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header>
+      <p class="site-title">{{ site.title }}</p>
+      <nav aria-label="Main">
+        <ul>
+          {%- for page in collections.nav %}
+          <li><a href="{{ page.url | url }}">{{ page.data.nav or page.data.title }}</a></li>
+          {%- endfor %}
+        </ul>
+      </nav>
+    </header>
+    <main id="main">
+      <h1>{{ title }}</h1>
+      {{ content | safe }}
+    </main>
+    <footer>
+      <p>{{ site.title }} &mdash; {{ site.tagline }}</p>
+    </footer>
+  </body>
+</html>

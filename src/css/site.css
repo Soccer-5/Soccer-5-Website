@@ -1,0 +1,5 @@
+/* Placeholder. Real styling lands in Phase 3, driven by DESIGN.md. */
+body { font-family: system-ui, sans-serif; margin: 0 auto; max-width: 44rem; padding: 1rem; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { position: static; }
+nav ul { display: flex; flex-wrap: wrap; gap: 1rem; list-style: none; padding: 0; }
