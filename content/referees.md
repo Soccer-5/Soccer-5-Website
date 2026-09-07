@@ -9,19 +9,6 @@ feedback_url: https://forms.gle/Lb5ifN9kdp3pcsKYA
 flyer_url: /s/Why-You-Should-Consider-Becoming-a-Soccer-5-League-Referee-2024.pdf
 ---
 
-## Referee Feedback?
-
-Coaches, please use this form to submit specific feedback on the officiating
-crew from your games. Information will be passed on to the home club's referee
-assignor. Helpful feedback includes positive remarks as well as concerns about
-promptness and professionalism. This is not meant to be a forum for protests or
-debating referee decisions.
-
-Parents, if you have referee feedback, please communicate it to your coach.
-Spectator or anonymous submissions will be deleted.
-
-[Submit]({{ feedback_url }})
-
 ## Soccer-5 needs more referees!
 
 ### Why You Should Consider Becoming a Soccer-5 League Referee!
@@ -47,3 +34,17 @@ local assignor by
 also give you details on locations, times, and pay.
 
 [Official PDF Flyer]({{ flyer_url }})
+
+## Referee Feedback?
+
+Coaches, please use this form to submit specific feedback on the officiating
+crew from your games. Information will be passed on to the home club's referee
+assignor. Helpful feedback includes positive remarks as well as concerns about
+promptness and professionalism. This is not meant to be a forum for protests or
+debating referee decisions.
+
+Parents, if you have referee feedback, please communicate it to your coach.
+Spectator or anonymous submissions will be deleted.
+
+[Submit]({{ feedback_url }})
+

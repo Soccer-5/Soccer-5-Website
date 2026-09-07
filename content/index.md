@@ -1,10 +1,10 @@
 ---
-title: Recreational Soccer League
+title: Soccer-5 Recreational Soccer League
 nav: Home
 order: 0
 layout: page
 permalink: /index.html
-description: The Soccer-5 Recreational League serves communities across Clackamas and North Marion counties in Oregon.
+description: The Soccer-5 Recreational League serves clubs across Clackamas and North Marion counties in Oregon.
 ---
 
 The Soccer-5 Recreational League serves the communities of Aurora, Canby,
@@ -38,26 +38,3 @@ games will occur from 9 am-5 pm each Saturday during the season.
 
 Thank you for participating and enjoy the soccer season!!
 
-## Soccer-5 needs referees!
-
-### Why You Should Consider Becoming a Soccer-5 League Referee!
-
-Being a soccer referee can be a rewarding and fulfilling experience. Not only do
-referees play an essential role in maintaining the integrity of the game, but
-they also gain various benefits from their involvement in the sport. Better
-knowledge of the rules of the game, developing leadership and decision-making
-skills, learning from experienced referees, getting paid for doing something you
-love, improving communication skills, and giving back to the community are just
-a few of the benefits. Getting certified requires about three hours of online
-courses: [www.oregonreferee.com/courses](http://www.oregonreferee.com/courses)
-
-On the website for the Oregon Soccer Referee Organization (OSRO), you will find
-much more information about becoming a referee, getting equipped, and career
-paths. Courses are listed and can fill up quickly. Please check back frequently
-for courses in your area.
-
-Once you have completed the certification course, you will be working with a
-local assignor to find positions that match your comfort level. You can find a
-local assignor by
-[contacting any of the soccer clubs in your area](/contact). Your assignor can
-also give you details on locations, times, and pay.
