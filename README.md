@@ -4,6 +4,9 @@ This repository holds everything on [soccer5clubs.org](https://soccer5clubs.org)
 When you change a file here and save it, the website updates itself about two
 minutes later.
 
+Prior to deploying with the DNS entry soccer5clubs.org, the website can be previewed
+on the [Github Pages Preview Page](https://soccer-5.github.io/Soccer-5-Website).
+
 You do not need to install anything. Everything below happens in your web
 browser, on this page.
 

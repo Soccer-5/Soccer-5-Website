@@ -1,6 +1,6 @@
 ---
-title: Contact
-nav: Contact
+title: Clubs
+nav: Clubs
 order: 1
 layout: page
 permalink: /contact.html

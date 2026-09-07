@@ -1,5 +1,5 @@
 ---
-title: Soccer-5 Recreational Soccer League
+title: Welcome to Soccer-5
 nav: Home
 order: 0
 layout: page
