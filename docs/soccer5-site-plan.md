@@ -73,8 +73,10 @@ Put these in the repo root or `_design/` before starting the design phase:
   properties block as the token layer in `src/css/tokens.css`. Follow its
   do/don't rules. Swap the accent color for the league color if they differ.
 - ~~League assets~~ — settled 2026-09-07. The league has no brand. Bill made an
-  S5 avatar (maroon disc, white "S5" over a white mountain range), committed as
-  `assets/images/S5-1128.png` with web-sized copies in `assets/images/logo/`.
+  S5 avatar (maroon disc, white "S5" over a white mountain range), now traced
+  to `assets/images/logo/s5.svg` (2.9 KB) with PNG fallbacks beside it. The
+  SVG is the canonical mark; the original 1128px raster has been deleted and
+  is in git history if needed.
   Sampled from it: **`#661C29`** maroon and white. That is the palette.
   There are no photographs on the site — see §3.1.
 - Nothing to supply for the `/s/` files — Phase 1 downloads all four
