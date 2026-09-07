@@ -37,11 +37,23 @@ jobs:
       - uses: actions/configure-pages@v5
         id: pages
 
+      # Checks the files volunteers edit. If this fails, nothing is deployed
+      # and the live site keeps serving the last good build.
+      - name: Check content
+        run: npm run validate
+
       - name: Build
         run: npm run build
         env:
           # Empty once the custom domain is live; until then the site is
           # served from soccer-5.github.io/Soccer-5-Website/.
+          PATH_PREFIX: ${{ steps.pages.outputs.base_path }}/
+
+      # Confirms every old Squarespace address still resolves and no internal
+      # link is broken. A URL regression must not reach production.
+      - name: Check links
+        run: npm run check-urls
+        env:
           PATH_PREFIX: ${{ steps.pages.outputs.base_path }}/
 
       - uses: actions/upload-pages-artifact@v3

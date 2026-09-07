@@ -8,7 +8,10 @@
   "scripts": {
     "build": "eleventy",
     "serve": "eleventy --serve",
-    "clean": "rm -rf _site"
+    "clean": "rm -rf _site",
+    "validate": "node scripts/validate.js",
+    "check-urls": "node scripts/check-urls.js",
+    "check": "npm run validate && npm run build && npm run check-urls"
   },
   "repository": {
     "type": "git",
@@ -16,6 +19,7 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
-    "csv-parse": "^7.0.2"
+    "csv-parse": "^7.0.2",
+    "gray-matter": "^4.0.3"
   }
 }
