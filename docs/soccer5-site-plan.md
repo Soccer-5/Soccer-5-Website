@@ -490,8 +490,6 @@ act on, and the live site is unaffected.
 - Bill drops `DESIGN.md` and assets into the repo.
 - Read `DESIGN.md` fully. Extract the CSS custom properties block into
   `src/css/tokens.css`. Substitute the league accent color if needed.
-- Read `/mnt/skills/public/frontend-design/SKILL.md` if available in the
-  session; follow it alongside `DESIGN.md`. `DESIGN.md` wins on conflicts.
 - Build `base.njk`, `nav.njk`, `footer.njk`, `home.njk`, `page.njk`.
 - Build `site.css` using only tokens from `tokens.css`. No magic numbers.
 - Components needed: page header, nav (responsive; hamburger only if the
