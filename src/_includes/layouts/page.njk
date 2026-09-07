@@ -1,7 +1,11 @@
 ---
 layout: layouts/base.njk
 ---
+<div class="prose">
 {{ content | safe }}
+</div>
+
+{%- if season_url %}{% include "partials/season-link.njk" %}{% endif %}
 
 {#- `data_section` in a page's front matter pulls in a table built from a file
     in _data/. It is a plain word, not a path; see CONTRIBUTING-DEV.md. -#}

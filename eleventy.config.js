@@ -33,10 +33,15 @@ export default function (eleventyConfig) {
     value === "/index.html" ? "/" : (value || "").replace(/\.html$/, ""),
   );
 
-  // "https://www.example.org/" -> "www.example.org" for link text.
-  eleventyConfig.addFilter("displayUrl", (value) =>
-    (value || "").replace(/^https?:\/\//i, "").replace(/\/$/, ""),
-  );
+  // "https://www.example.org/" -> "www.example.org" for link text. A long
+  // path or query string is trimmed to an ellipsis: the label is for humans,
+  // the href carries the real address.
+  eleventyConfig.addFilter("displayUrl", (value) => {
+    const bare = (value || "").replace(/^https?:\/\//i, "").replace(/\/$/, "");
+    const slash = bare.indexOf("/");
+    if (slash === -1 || bare.length <= 34) return bare;
+    return `${bare.slice(0, slash)}/\u2026`;
+  });
 
   // Group an array of rows by one of its columns, preserving first-seen order.
   eleventyConfig.addFilter("groupBy", (rows, key) => {
@@ -85,6 +90,7 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({ "assets/images": "assets/images" });
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
+  eleventyConfig.addPassthroughCopy({ "assets/fonts": "fonts" });
   eleventyConfig.addPassthroughCopy({ "src/js": "js" });
 
   return {

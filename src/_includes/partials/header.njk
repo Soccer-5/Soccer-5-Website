@@ -1,0 +1,21 @@
+<header class="site-header">
+  <div class="site-header__bar shell">
+    <a class="brand" href="/">
+      <img class="brand__logo" src="/assets/images/logo/s5.svg" alt="" width="40" height="40">
+      <span>
+        <span class="brand__name">{{ site.title }}</span>
+        <span class="brand__tagline">{{ site.tagline }}</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul class="nav__list">
+        {%- for item in collections.nav %}
+        <li>
+          <a class="nav__link" href="{{ item.url | cleanUrl }}"
+             {% if item.url == page.url %}aria-current="page"{% endif %}>{{ item.data.nav or item.data.title }}</a>
+        </li>
+        {%- endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>

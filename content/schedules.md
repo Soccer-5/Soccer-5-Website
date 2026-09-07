@@ -10,5 +10,3 @@ season_url: https://oysa.sportsaffinity.com/tour/public/info/accepted_list.asp?&
 ---
 
 This season's league schedule:
-
-[{{ season_name }}]({{ season_url }})

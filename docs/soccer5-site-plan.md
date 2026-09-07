@@ -535,6 +535,40 @@ act on, and the live site is unaffected.
 ≥ 95, no console errors, and every page is under 300 KB total. With no
 photographs there is nothing to exempt from that budget.
 
+### 3.1 What was built, and where it departs from DESIGN.md
+
+DESIGN.md is a SaaS marketing language; this is a utility site. Most of it
+carried over. The departures, all deliberate:
+
+- **Accent is `#661C29`, not `#0007cb`.** Planned substitution. The maroon
+  measures 11.3:1 on the cream canvas, so unlike the violet it is safe for
+  body text, not just decoration.
+- **No Serrif face.** DESIGN.md pairs a serif with the sans for editorial
+  texture, but also says never to mix more than two typographic voices. Inter
+  plus JetBrains Mono is two, and a serif earns nothing on a page of 49 field
+  addresses. Saves a font download.
+- **`--color-smoke` and `--color-ash` are not used for text.** DESIGN.md
+  assigns them to muted headings and inactive tabs; they measure 3.4:1 and
+  2.5:1 on the canvas and fail this site's 4.5:1 floor. They stay in the
+  token file for non-text use.
+- **Body copy is weight 400, headings 300.** This is DESIGN.md's own rule
+  ("use weight 400 only for body and supporting text where readability is
+  paramount"), applied literally rather than stretching the 300 signature
+  across everything.
+- **Components that had no subject were skipped**: announcement banner, tab
+  nav, product screenshot panel, customer logo grid, image strip, two-column
+  feature blocks. The club directory reuses the card treatment; the schedule
+  link reuses the filled black button.
+
+Fonts are self-hosted from `assets/fonts/` rather than loaded from a CDN, so
+no visitor IP reaches a third party and the site has no runtime dependency
+the league does not control. Inter and JetBrains Mono are both SIL OFL. Latin
+subset only, four faces, 91 KB total.
+
+Measured: heaviest page (Contact, with 14 club logos) is 166 KB. No
+JavaScript ships at all — the nav is plain links, so it works with scripting
+disabled.
+
 ### Phase 4 — Documentation
 - `README.md` per §7.
 - `CONTRIBUTING-DEV.md`: local setup, where things live, how to add a page,

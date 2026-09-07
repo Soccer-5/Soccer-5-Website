@@ -86,6 +86,10 @@ for (const file of pageFiles) {
     fail(file, lineOf(raw, "data_section"), `"data_section: ${data.data_section}" is not one of the tables this site can show. Use one of: ${DATA_SECTIONS.join(", ")}`);
   }
 
+  if ((data.season_name && !data.season_url) || (data.season_url && !data.season_name)) {
+    fail(file, 1, 'A season needs both "season_name:" and "season_url:". One of them is missing, so the schedule link would not appear.');
+  }
+
   for (const key of ["season_url", "feedback_url", "form_url", "map_url"]) {
     if (data[key] && !isUrl(data[key])) {
       fail(file, lineOf(raw, key), `"${key}: ${data[key]}" is not a complete web address. It should start with https://`);

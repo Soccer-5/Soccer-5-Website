@@ -1,0 +1,100 @@
+/* Design tokens, taken from DESIGN.md (Intercom — warm cream editorial).
+ *
+ * Two deliberate substitutions, both recorded in docs/soccer5-site-plan.md:
+ *
+ *   1. The accent is the league maroon #661C29, sampled from the S5 logo,
+ *      in place of DESIGN.md's electric violet #0007cb. On the cream canvas
+ *      it measures 11.3:1, so unlike the violet it is safe for body text.
+ *
+ *   2. Typefaces are DESIGN.md's own listed substitutes: Inter for Saans,
+ *      JetBrains Mono for SaansMono. Both are SIL OFL and self-hosted from
+ *      assets/fonts/ — no third-party request, so no visitor IP is handed to
+ *      a font CDN. The Serrif editorial face is not used; DESIGN.md says
+ *      never to mix more than two typographic voices on a screen, and on a
+ *      page of 49 field addresses the serif earns nothing.
+ *
+ * Do not add colors here that are not in DESIGN.md. Do not use --color-smoke
+ * or --color-ash for body text: they measure 3.4:1 and 2.5:1 on the canvas
+ * and fail the 4.5:1 floor this site holds itself to.
+ */
+
+:root {
+  /* ---- Color ------------------------------------------------------- */
+  --color-accent: #661c29;          /* league maroon, replaces electric violet */
+  --color-accent-ink: #ffffff;      /* text on an accent fill, 11.9:1 */
+
+  --color-pure-white: #ffffff;
+  --color-canvas: #faf9f6;          /* warm cream; never pure white */
+  --color-linen: #f1eee9;           /* one step warmer, for banded sections */
+  --color-stone: #d3cec6;
+  --color-hairline: #dedbd6;
+
+  --color-ink: #111111;             /* body and headings, 17.9:1 */
+  --color-carbon: #000000;          /* filled buttons only */
+  --color-iron: #414141;            /* secondary text, 9.7:1 */
+  --color-graphite: #585858;        /* tertiary text, 6.8:1 */
+  --color-smoke: #888888;           /* NON-TEXT ONLY — 3.4:1 */
+  --color-ash: #a0a0a0;             /* NON-TEXT ONLY — 2.5:1 */
+
+  /* ---- Type -------------------------------------------------------- */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, monospace;
+
+  --weight-display: 300;            /* the signature; never 700 */
+  --weight-body: 400;
+  --weight-strong: 600;
+
+  --text-caption: 0.75rem;          /* 12px */
+  --text-body-sm: 0.875rem;         /* 14px */
+  --text-body: 1rem;                /* 16px */
+  --text-subheading: 1.25rem;       /* 20px */
+  --text-heading-sm: 1.5rem;        /* 24px */
+  --text-heading: 2rem;             /* 32px */
+  --text-heading-lg: 2.5rem;        /* 40px */
+  --text-display: 3.375rem;         /* 54px */
+  --text-display-lg: 5rem;          /* 80px */
+
+  --leading-display: 0.95;
+  --leading-tight: 1.25;
+  --leading-body: 1.5;
+  --leading-label: 1.4;
+
+  --tracking-caption: 1.2px;
+  --tracking-body: -0.16px;
+  --tracking-subheading: -0.2px;
+  --tracking-heading-sm: -0.48px;
+  --tracking-heading: -0.64px;
+  --tracking-heading-lg: -1.2px;
+  --tracking-display: -1.62px;
+  --tracking-display-lg: -2.4px;
+
+  /* ---- Space ------------------------------------------------------- */
+  --space-4: 0.25rem;
+  --space-8: 0.5rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-20: 1.25rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-40: 2.5rem;
+  --space-48: 3rem;
+  --space-64: 4rem;
+  --space-80: 5rem;
+  --space-96: 6rem;
+
+  /* ---- Shape ------------------------------------------------------- */
+  --radius: 4px;                    /* universal; never larger */
+
+  /* ---- Layout ------------------------------------------------------ */
+  --page-max: 1200px;
+  --prose-max: 68ch;                /* readable measure for body copy */
+  --section-gap: var(--space-64);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --section-gap: var(--space-96);
+  }
+}
