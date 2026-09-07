@@ -1,0 +1,24 @@
+{# Renders _data/clubs.csv. Sorted by name at build time; row order in the CSV
+   does not matter. Every field except `name` is optional. #}
+<ul class="club-directory">
+  {%- for club in clubs | sort(attribute="name") %}
+  <li class="club">
+    {%- if club.logo %}
+    <img class="club-logo" src="/assets/images/clubs/{{ club.logo }}" alt="{{ club.name }} logo" loading="lazy" width="120" height="120">
+    {%- endif %}
+    <h3 class="club-name">{{ club.name }}</h3>
+    {%- if club.address %}
+    <p class="club-address">{{ club.address }}</p>
+    {%- endif %}
+    {%- if club.email %}
+    <p class="club-email"><a href="mailto:{{ club.email }}">{{ club.email }}</a></p>
+    {%- endif %}
+    {%- if club.phone %}
+    <p class="club-phone"><a href="tel:{{ club.phone | replace("-", "") }}">{{ club.phone }}</a></p>
+    {%- endif %}
+    {%- if club.website %}
+    <p class="club-website"><a href="{{ club.website | externalUrl }}">{{ club.website | displayUrl }}</a></p>
+    {%- endif %}
+  </li>
+  {%- endfor %}
+</ul>

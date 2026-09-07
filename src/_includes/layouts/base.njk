@@ -7,7 +7,7 @@
     {%- if description %}
     <meta name="description" content="{{ description }}">
     {%- endif %}
-    <link rel="stylesheet" href="{{ '/css/site.css' | url }}">
+    <link rel="stylesheet" href="/css/site.css">
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -16,7 +16,7 @@
       <nav aria-label="Main">
         <ul>
           {%- for page in collections.nav %}
-          <li><a href="{{ page.url | url }}">{{ page.data.nav or page.data.title }}</a></li>
+          <li><a href="{{ page.url | cleanUrl }}">{{ page.data.nav or page.data.title }}</a></li>
           {%- endfor %}
         </ul>
       </nav>

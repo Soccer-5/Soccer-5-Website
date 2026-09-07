@@ -1,0 +1,23 @@
+{# Renders _data/fields.csv grouped by area, with per-area notes from
+   _data/field_areas.csv. Area order follows the order rows appear in the CSV. #}
+{%- for group in fields | groupBy("area") %}
+<section class="field-area">
+  <h2>{{ group.name }}</h2>
+  {%- for area in field_areas %}
+    {%- if area.area == group.name %}
+      {%- if area.dogs %}<p class="field-area-dogs">{{ area.dogs }}</p>{% endif %}
+      {%- if area.note %}<p class="field-area-note">{{ area.note }}</p>{% endif %}
+    {%- endif %}
+  {%- endfor %}
+  <ul class="field-list">
+    {%- for field in group.items %}
+    <li class="field">
+      <h3 class="field-name">{{ field.name }}{% if field.grades %} <span class="field-grades">({{ field.grades }})</span>{% endif %}</h3>
+      {%- if field.address %}<p class="field-address">{{ field.address }}</p>{% endif %}
+      {%- if field.notes %}<p class="field-notes">{{ field.notes }}</p>{% endif %}
+      {%- if field.map_url %}<p class="field-map"><a href="{{ field.map_url }}">Google Map</a></p>{% endif %}
+    </li>
+    {%- endfor %}
+  </ul>
+</section>
+{%- endfor %}

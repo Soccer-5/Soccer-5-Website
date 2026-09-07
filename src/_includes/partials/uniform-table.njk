@@ -1,0 +1,15 @@
+{# Renders _data/uniforms.csv. #}
+<table class="uniform-table">
+  <thead>
+    <tr><th scope="col">Club</th><th scope="col">Jerseys</th><th scope="col">Colors</th></tr>
+  </thead>
+  <tbody>
+    {%- for row in uniforms %}
+    <tr>
+      <th scope="row">{{ row.club }}</th>
+      <td>{{ row.jerseys }}</td>
+      <td>{{ row.colors }}</td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>

@@ -4,7 +4,50 @@
 // level where volunteers can find them. Everything that is not site content
 // has to be explicitly ignored below.
 
+import { HtmlBasePlugin } from "@11ty/eleventy";
+import { parse } from "csv-parse/sync";
+
 export default function (eleventyConfig) {
+  // Rewrites root-relative URLs in the built HTML to include pathPrefix, so
+  // links written as /contact or /s/rules.pdf in a Markdown body work both on
+  // the project-pages subpath and at the domain root. Without this, links in
+  // page bodies (which do not go through the `url` filter) 404 in preview.
+  eleventyConfig.addPlugin(HtmlBasePlugin);
+
+  // CSV files in _data/ become arrays of objects keyed by the header row.
+  // Volunteers edit these in GitHub, which renders CSV as a table.
+  eleventyConfig.addDataExtension("csv", (contents) =>
+    parse(contents, { columns: true, skip_empty_lines: true, trim: true }),
+  );
+
+  // Volunteers paste "www.example.org"; links need a scheme.
+  eleventyConfig.addFilter("externalUrl", (value) => {
+    if (!value) return value;
+    return /^https?:\/\//i.test(value) ? value : `https://${value}`;
+  });
+
+  // "/contact.html" -> "/contact", "/index.html" -> "/". Pages are written as
+  // flat .html files so that GitHub Pages serves them at the old Squarespace
+  // paths; links should use those paths, not the filenames.
+  eleventyConfig.addFilter("cleanUrl", (value) =>
+    value === "/index.html" ? "/" : (value || "").replace(/\.html$/, ""),
+  );
+
+  // "https://www.example.org/" -> "www.example.org" for link text.
+  eleventyConfig.addFilter("displayUrl", (value) =>
+    (value || "").replace(/^https?:\/\//i, "").replace(/\/$/, ""),
+  );
+
+  // Group an array of rows by one of its columns, preserving first-seen order.
+  eleventyConfig.addFilter("groupBy", (rows, key) => {
+    const out = new Map();
+    for (const row of rows || []) {
+      if (!out.has(row[key])) out.set(row[key], []);
+      out.get(row[key]).push(row);
+    }
+    return [...out].map(([name, items]) => ({ name, items }));
+  });
+
   eleventyConfig.setInputDirectory(".");
   eleventyConfig.setOutputDirectory("_site");
   eleventyConfig.setDataDirectory("_data");
