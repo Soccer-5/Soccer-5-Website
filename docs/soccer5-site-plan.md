@@ -579,6 +579,20 @@ disabled.
 **Done when:** a volunteer can follow README to change a club's email
 without asking anyone.
 
+Done 2026-09-07. Walked the README's own steps: editing the `email` column in
+`clubs.csv` publishes correctly, and the mistake the README warns about (an
+address with a comma and no quotation marks) produces exactly the error the
+"If something goes wrong" section describes, naming the file and the line.
+
+README covers the §7 list plus a file-to-page table, because
+`uniform-info.md` → Uniform Info and `league-rules.md` → League Rules are not
+guessable from the filename. It also tells volunteers not to touch
+`permalink`, which §4.1 depends on.
+
+CONTRIBUTING-DEV.md documents the path-prefix test explicitly, since the dev
+server does not reproduce production and that gap has already caused one
+outage (root-absolute `@import`s in CSS, fixed in commit 70e5e2b).
+
 ### Phase 5 — Cutover
 - Add `CNAME` file (via Pages custom-domain setting, which commits it).
 - DNS: `A` records for apex to GitHub Pages IPs, `CNAME` for `www` →
