@@ -4,7 +4,6 @@ nav: Uniform Info
 order: 3
 layout: page
 permalink: /uniforminfo.html
-hero: /assets/images/heroes/uniforms.jpeg
 data_section: uniform-table
 description: Jersey colors for each club in the Soccer-5 Recreational League, and the home/away jersey rule.
 ---

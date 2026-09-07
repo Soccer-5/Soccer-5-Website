@@ -1,10 +1,6 @@
 ---
 layout: layouts/base.njk
 ---
-{%- if hero %}
-<img class="hero" src="{{ hero }}" alt="{{ hero_alt or '' }}"{% if not hero_alt %} role="presentation"{% endif %}>
-{%- endif %}
-
 {{ content | safe }}
 
 {#- `data_section` in a page's front matter pulls in a table built from a file

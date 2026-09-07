@@ -31,12 +31,14 @@ served at the same paths:
 
 Images pulled off the Squarespace CDN before it goes away:
 
-- 8 page heroes → `assets/images/heroes/`
 - 14 club logos → `assets/images/clubs/`, named after the club slug in `clubs.csv`
 - favicon → `assets/favicon/favicon.webp` (Squarespace served WebP under a
-  `.ico` name; Phase 3 should generate a real favicon set)
+  `.ico` name; Phase 3 should generate a real favicon set from the S5 logo)
+- 8 page heroes were downloaded, then removed on 2026-09-07 when the league
+  decided against photographs. See plan §3.1. They are in git history if
+  anyone wants them back.
 
-The plan's §3 listed only two hero images. There are eight, plus the logos.
+The plan's §3 listed only two hero images. There were eight, plus the logos.
 
 ## Changes made to the content
 

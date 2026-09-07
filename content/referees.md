@@ -4,7 +4,6 @@ nav: Referees
 order: 4
 layout: page
 permalink: /referees.html
-hero: /assets/images/heroes/referees.jpeg
 description: How to become a Soccer-5 league referee, and how coaches submit referee feedback.
 feedback_url: https://forms.gle/Lb5ifN9kdp3pcsKYA
 flyer_url: /s/Why-You-Should-Consider-Becoming-a-Soccer-5-League-Referee-2024.pdf

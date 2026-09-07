@@ -72,16 +72,41 @@ Put these in the repo root or `_design/` before starting the design phase:
 - `DESIGN.md` — downloaded from styles.refero.design. Use its CSS custom
   properties block as the token layer in `src/css/tokens.css`. Follow its
   do/don't rules. Swap the accent color for the league color if they differ.
-- League assets: logo (SVG preferred, PNG fallback), any brand colors, and the
-  photos worth keeping. The two Squarespace hero photos are at:
-  - `https://images.squarespace-cdn.com/content/v1/648b75fdcd6027391c2f44d0/1686861953266-L66NKRAGLMN69VJCQAWV/image-asset.jpeg` (home)
-  - `https://images.squarespace-cdn.com/content/v1/648b75fdcd6027391c2f44d0/1689361289963-FERRG6KDSLDYK4TDDY3P/image-asset.jpeg` (schedules)
-  Download them now; they disappear when Squarespace is cancelled.
+- ~~League assets~~ — settled 2026-09-07. The league has no brand. Bill made an
+  S5 avatar (maroon disc, white "S5" over a white mountain range), committed as
+  `assets/images/S5-1128.png` with web-sized copies in `assets/images/logo/`.
+  Sampled from it: **`#661C29`** maroon and white. That is the palette.
+  There are no photographs on the site — see §3.1.
 - Nothing to supply for the `/s/` files — Phase 1 downloads all four
   (two rules PDFs, the referee flyer, the CYSO logo) straight from the live
   site. Bill only needs to confirm the two rules PDFs are the current ones.
 - Which GitHub org the repo lives in, and the custom domain to use
-  (`soccer5clubs.org`, with `www` redirecting, or the reverse).
+  (`soccer5clubs.org`, with `www` redirecting, or the reverse). Org and repo
+  settled: `Soccer-5/Soccer-5-Website`.
+
+### 3.1 No photographs — decided 2026-09-07
+
+The old site carried eight hero photos, 5.2 MB in total, all Squarespace stock.
+They are gone and are not being replaced. Reasons, in order of weight:
+
+1. **They worked against the site's job.** People arrive to find the schedule
+   link, a field address, or a club contact. A 1.4 MB decorative photo above a
+   list of 49 addresses is an obstacle for someone checking a field location on
+   a phone in a parking lot.
+2. **Licensing.** They were stock images licensed through Squarespace. Re-hosting
+   them on GitHub Pages is very likely outside that license, so keeping them
+   would have been a legal question as well as a design one.
+3. **Photographs of children are a separate problem.** Free-license stock sites
+   grant copyright, not model releases. Pictures of identifiable kids who are
+   not in the league read strangely on a youth league site.
+
+The design therefore rests on the maroon, the logo, and typography. If the
+league later supplies its own game photos with parental consent, the templates
+can take them — but the default stays no photos, and stock photography of
+children is not to be added.
+
+The eight old heroes are recoverable from git history (removed in the commit
+that recorded this decision) if anyone ever wants them back.
 
 ---
 
@@ -487,13 +512,16 @@ and every URL in §4 resolves in the local build.
 act on, and the live site is unaffected.
 
 ### Phase 3 — Design
-- Bill drops `DESIGN.md` and assets into the repo.
+- Bill drops `DESIGN.md` into the repo. Assets are already in (§3).
 - Read `DESIGN.md` fully. Extract the CSS custom properties block into
-  `src/css/tokens.css`. Substitute the league accent color if needed.
+  `src/css/tokens.css`. The accent is `#661C29`, sampled from the league
+  avatar; substitute it for whatever accent `DESIGN.md` ships with.
+- No hero image block — see §3.1. The page header carries the logo and the
+  page title, and content starts immediately.
 - Build `base.njk`, `nav.njk`, `footer.njk`, `home.njk`, `page.njk`.
 - Build `site.css` using only tokens from `tokens.css`. No magic numbers.
-- Components needed: page header, nav (responsive; hamburger only if the
-  DESIGN.md pattern needs it), hero image block, prose container, club
+- Components needed: page header with logo, nav (responsive; hamburger only if
+  the DESIGN.md pattern needs it), prose container, club
   directory (cards or table — pick what fits the design), field list,
   "season link" callout on Schedules, footer with league name and a
   "site source on GitHub" link.
@@ -502,7 +530,8 @@ act on, and the live site is unaffected.
 - Test at 360px, 768px, 1280px widths.
 
 **Done when:** all pages render in the new design, Lighthouse accessibility
-≥ 95, no console errors, page weight under 500 KB excluding hero images.
+≥ 95, no console errors, and every page is under 300 KB total. With no
+photographs there is nothing to exempt from that budget.
 
 ### Phase 4 — Documentation
 - `README.md` per §7.

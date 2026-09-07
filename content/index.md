@@ -4,7 +4,6 @@ nav: Home
 order: 0
 layout: page
 permalink: /index.html
-hero: /assets/images/heroes/home.jpeg
 description: The Soccer-5 Recreational League serves communities across Clackamas and North Marion counties in Oregon.
 ---
 

@@ -86,10 +86,6 @@ for (const file of pageFiles) {
     fail(file, lineOf(raw, "data_section"), `"data_section: ${data.data_section}" is not one of the tables this site can show. Use one of: ${DATA_SECTIONS.join(", ")}`);
   }
 
-  if (data.hero && !fs.existsSync(path.join(".", data.hero))) {
-    fail(file, lineOf(raw, "hero"), `The image "${data.hero}" is not in the repository. Check the spelling, or upload the image first.`);
-  }
-
   for (const key of ["season_url", "feedback_url", "form_url", "map_url"]) {
     if (data[key] && !isUrl(data[key])) {
       fail(file, lineOf(raw, key), `"${key}: ${data[key]}" is not a complete web address. It should start with https://`);
