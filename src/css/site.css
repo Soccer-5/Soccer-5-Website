@@ -1,5 +1,5 @@
-@import url("/css/fonts.css");
-@import url("/css/tokens.css");
+@import url("fonts.css");
+@import url("tokens.css");
 
 /* Layout and components. Every value comes from tokens.css — no magic numbers.
  * DESIGN.md rules that govern this file: warm cream canvas, never pure white;

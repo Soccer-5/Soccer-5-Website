@@ -62,12 +62,47 @@ for (const file of htmlFiles) {
     }
   }
 }
+// Crawl CSS too. HtmlBasePlugin rewrites URLs in HTML attributes but not
+// inside stylesheets, so a root-absolute @import or font src in a CSS file
+// silently 404s under a project-pages path prefix and the site renders
+// unstyled. Relative URLs are correct there; this catches absolute ones.
+const cssFiles = [];
+const walkCss = (dir) => {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) walkCss(full);
+    else if (entry.name.endsWith(".css")) cssFiles.push(full);
+  }
+};
+walkCss(OUT);
+
+for (const file of cssFiles) {
+  const css = fs.readFileSync(file, "utf8");
+  const here = path.dirname(path.relative(OUT, file));
+  for (const m of css.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)) {
+    const ref = m[1].trim();
+    if (/^(https?:|data:|#)/i.test(ref)) continue;
+    if (ref.startsWith("/")) {
+      problems.push(
+        `${path.relative(OUT, file)} refers to "${ref}" with a leading slash.\n` +
+          `  URLs inside a stylesheet are not rewritten for the site's path prefix, so this breaks\n` +
+          `  wherever the site is not served from the domain root. Make it relative instead.`,
+      );
+      continue;
+    }
+    const resolved = path.posix.normalize(path.posix.join(here, ref.split(/[?#]/)[0]));
+    if (!fs.existsSync(path.join(OUT, resolved))) {
+      problems.push(`${path.relative(OUT, file)} refers to "${ref}", which does not exist.`);
+    }
+  }
+}
+
 for (const [url, pages] of dead) {
   problems.push(`The link "${url}" points at something that does not exist. Used on: ${[...pages].join(", ")}`);
 }
 
 if (problems.length === 0) {
-  console.log(`Checked ${LEGACY_URLS.length} old addresses and every internal link across ${htmlFiles.length} pages. Nothing is broken.`);
+  console.log(`Checked ${LEGACY_URLS.length} old addresses, every internal link across ${htmlFiles.length} pages, and every reference in ${cssFiles.length} stylesheets. Nothing is broken.`);
   process.exit(0);
 }
 
