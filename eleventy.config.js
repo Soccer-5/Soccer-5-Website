@@ -61,6 +61,7 @@ export default function (eleventyConfig) {
 
   // Rebuild the page when the map's inputs change, not just its templates.
   eleventyConfig.addWatchTarget("src/data/basemap.geojson");
+  eleventyConfig.addWatchTarget("src/data/towns.json");
   eleventyConfig.addWatchTarget("src/field-map.js");
 
   eleventyConfig.setInputDirectory(".");
