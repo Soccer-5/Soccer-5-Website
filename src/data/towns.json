@@ -1,0 +1,16 @@
+[
+  { "name": "Milwaukie", "lat": 45.4448, "lon": -122.6208, "minor": true },
+  { "name": "Happy Valley", "lat": 45.436, "lon": -122.5101, "minor": true },
+  { "name": "Damascus", "lat": 45.4264, "lon": -122.443, "minor": true, "dx": 14, "dy": 11 },
+  { "name": "Lake Oswego", "lat": 45.4136, "lon": -122.7 },
+  { "name": "Gladstone", "lat": 45.3856, "lon": -122.5928, "minor": true },
+  { "name": "Tualatin", "lat": 45.3769, "lon": -122.7747, "minor": true },
+  { "name": "West Linn", "lat": 45.3666, "lon": -122.6389, "dx": -50 },
+  { "name": "Oregon City", "lat": 45.3413, "lon": -122.5923 },
+  { "name": "Wilsonville", "lat": 45.3113, "lon": -122.7709, "minor": true },
+  { "name": "Estacada", "lat": 45.2982, "lon": -122.3324, "dx": -18 },
+  { "name": "Canby", "lat": 45.2651, "lon": -122.6884 },
+  { "name": "Aurora", "lat": 45.2283, "lon": -122.7572, "minor": true },
+  { "name": "Hubbard", "lat": 45.1815, "lon": -122.8083, "minor": true },
+  { "name": "Molalla", "lat": 45.1493, "lon": -122.5849 }
+]

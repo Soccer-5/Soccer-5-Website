@@ -10,12 +10,14 @@
 // fields.js writes and a developer commits. A field with no coordinates is
 // simply left off the map — validate.js says which ones.
 //
-// The basemap is src/data/basemap.geojson (US Census, public domain). See the
-// header of that file's entry in CONTRIBUTING-DEV.md for how to regenerate it.
+// The basemap is src/data/basemap.geojson and the town labels over it are
+// src/data/towns.json (both US Census, public domain). See those files' entries
+// in CONTRIBUTING-DEV.md for how to regenerate them.
 
 import fs from "node:fs";
 
 const BASEMAP = "src/data/basemap.geojson";
+const TOWNS = "src/data/towns.json";
 const TOKENS = "src/css/tokens.css";
 
 // Degrees of breathing room between the outermost field and the frame.
@@ -160,7 +162,55 @@ const locate = (fields, coordinates) =>
     })
     .filter(Boolean);
 
+// Town names, so a reader can find their own town before hunting for a pin.
+// Points are Census place internal points (src/data/towns.json). Two optional
+// keys per row:
+//
+//   dx/dy   a hand-nudge in map units, used only where two names would
+//           otherwise sit on top of each other. Kept in the data rather than
+//           solved for, because there are fourteen of them and they move only
+//           when a field moves.
+//   minor   drop this name on a narrow screen. Label size is fixed in map
+//           units, so a name that reads at 736 px is unreadable at 335 — and
+//           sizing it up to stay readable there makes fourteen names collide.
+//           So the narrow layout keeps only the towns a reader is most likely
+//           to be looking for; site.css owns that breakpoint.
+let towns = null;
+const loadTowns = () => {
+  if (towns) return towns;
+  towns = fs.existsSync(TOWNS) ? JSON.parse(fs.readFileSync(TOWNS, "utf8")) : [];
+  return towns;
+};
+
 const WIDTH = 1000;
+
+// Every label sits this far above its point, rather than on it. Centred on the
+// point a name is struck through by whichever pin happens to be downtown —
+// pins are drawn last, so they win — and Happy Valley, Lake Oswego, Estacada
+// and Molalla all had one through the middle of the word.
+const LABEL_LIFT = 15;
+
+// Labels are drawn under the pins, and any town the frame does not reach is
+// dropped rather than clamped to the edge — a name pushed to the border points
+// at the wrong place, which is worse than no name.
+const drawTowns = (view) => {
+  const marks = [];
+  for (const town of loadTowns()) {
+    const [px, py] = project(town.lon, town.lat, view);
+    if (px < 0 || px > view.width || py < 0 || py > view.height) continue;
+    const x = px + (town.dx || 0);
+    const y = py - LABEL_LIFT + (town.dy || 0);
+    const cls = town.minor ? "fieldmap__town fieldmap__town--minor" : "fieldmap__town";
+    marks.push(
+      `<text class="${cls}" x="${Math.round(x * 10) / 10}" ` +
+      `y="${Math.round(y * 10) / 10}" text-anchor="middle" ` +
+      `font-family="sans-serif" font-size="24" letter-spacing="1.5" ` +
+      `fill="${token("graphite")}" stroke="${token("linen")}" stroke-width="5" ` +
+      `paint-order="stroke" stroke-linejoin="round">${escape(town.name)}</text>`
+    );
+  }
+  return marks.length ? `<g class="fieldmap__towns">${marks.join("")}</g>` : "";
+};
 
 const drawBase = (view) => {
   const { county, road, waterArea, waterLine } = loadBasemap();
@@ -218,6 +268,6 @@ export function leagueMap(fields, coordinates) {
   return (
     `<svg class="fieldmap" viewBox="0 0 ${WIDTH} ${view.height}" ` +
     `xmlns="http://www.w3.org/2000/svg" role="group" aria-label="${escape(title)}">` +
-    `<title>${escape(title)}</title>${drawBase(view)}${marks}</svg>`
+    `<title>${escape(title)}</title>${drawBase(view)}${drawTowns(view)}${marks}</svg>`
   );
 }

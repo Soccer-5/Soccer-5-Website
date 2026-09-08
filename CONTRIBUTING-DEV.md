@@ -171,6 +171,17 @@ the source files and `mapshaper` commands are in the plan (§9, Phase 5). If you
 change the clip box, change `DRAWN` in `src/field-map.js` to match, or the map
 will frame paper the basemap does not cover.
 
+**`src/data/towns.json`** — the town names drawn over that basemap. Each row is
+a `name` and the Census place internal point for it (`lat`, `lon`), plus two
+optional keys: `dx`/`dy` nudges the label in map units where two names would
+otherwise collide, and `minor` drops it on a narrow screen, where the type has
+to grow enough that fourteen names no longer fit. Points came from the 2023
+Census gazetteer, `2023_gaz_place_41.txt` under
+`www2.census.gov/geo/docs/maps-data/data/gazetteer/2023_Gazetteer/` (public
+domain), filtered to places inside the map frame. Adding or removing a town is
+editing this file; check the result at a phone width as well as a desktop one,
+because collisions only show up at one of them.
+
 ### Swapping to Google Sheets later
 
 The plan (§8) keeps this door open. The change is confined to one place:
