@@ -769,6 +769,17 @@ with `mapshaper` to 88 KB at 4-decimal precision, and tagged with a
 regenerating; if it does, CONTRIBUTING-DEV.md points here and the `DRAWN`
 constant in `src/field-map.js` has to move with the clip box.
 
+Town names over that basemap came later, out of the same source: the fourteen
+Census places inside the frame that the league plays in, with their internal
+points, in `src/data/towns.json`. Two things about them were decided by looking
+at the rendered map rather than in the abstract. Every label sits fifteen map
+units above its point, because centred on it a name is struck through by
+whichever pin happens to be downtown. And the narrow layout shows six of the
+fourteen: the label size is fixed in map units, so keeping a name readable on a
+335 px map means roughly doubling it, and at that size all fourteen collide —
+better to name the towns a reader is likely to be looking for than to print
+fourteen on top of each other.
+
 Two things were deliberately left alone. **Memorial Park** geocodes to its
 street address rather than the middle of the park, 580 m from the league's own
 pin — for someone driving there the entrance is the better point. And on a

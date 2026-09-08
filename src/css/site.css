@@ -425,6 +425,55 @@ body {
   vector-effect: non-scaling-stroke;
 }
 
+/* Town names. Quieter than a pin label — graphite, letterspaced, and under the
+   pins in the stacking order — because they are there to orient a reader, not
+   to be read one at a time. The halo is the map's own background, so a name
+   crossing a road or the county line stays legible.
+
+   Font size is in map units, which the SVG scales with its width, so it is
+   stepped by viewport to land near 11-15px however wide the map ends up. The
+   steps track .field-map-figure's 46rem cap and .shell's padding: below 832px
+   of viewport the map is narrower than its cap and the type has to grow to
+   compensate.
+
+   That growth is why the narrow layout carries fewer names. At phone width the
+   type has to roughly double to stay readable, and at that size all fourteen
+   names overlap each other. The ones marked minor in src/data/towns.json drop
+   out below 680px, leaving the six towns a reader is most likely to be looking
+   for. */
+.fieldmap__town {
+  font-family: var(--font-sans);
+  font-size: 34px;
+  font-weight: var(--weight-body);
+  letter-spacing: 1.5px;
+  fill: var(--color-graphite);
+  paint-order: stroke;
+  stroke: var(--color-linen);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.fieldmap__town--minor {
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .fieldmap__town {
+    font-size: 27px;
+  }
+}
+
+@media (min-width: 680px) {
+  .fieldmap__town {
+    font-size: 21px;
+  }
+
+  .fieldmap__town--minor {
+    display: inline;
+  }
+}
+
 .fieldmap__dot {
   fill: var(--color-accent);
   stroke: var(--color-canvas);
