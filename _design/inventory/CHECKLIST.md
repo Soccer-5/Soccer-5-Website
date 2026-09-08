@@ -73,10 +73,16 @@ except where it marks the two-line home/away jersey rule on `/uniforminfo`.
    across two response spreadsheets. Both were carried over as-is.
 
 3. **Oregon City field data has two inconsistencies.**
-   - The area note says "No Dogs Allowed except at Chapin Park on leashes,"
+   - The club's note says "No Dogs Allowed except at Chapin Park on leashes,"
      but no Chapin Park is listed among the fields.
    - "Wesley Lynn Park" (12901 Frontier Pkwy) has a Google Map link that
      points at Chapin Park instead.
+
+   Still open. The field map (Phase 5) is not affected — it is drawn from the
+   `address` column, so the pin is on Frontier Pkwy where it belongs, and the
+   wrong Google Map link is the only thing still pointing at Chapin Park. The
+   underlying question is unchanged: is a Chapin Park field missing from the
+   list, or is the note left over from a field the league no longer uses?
 
 4. **Colton Youth Soccer's website link is a vanity name over a different
    host.** Link text is `coltonyouthsoccerorganizations.com`; the href goes to
@@ -87,8 +93,14 @@ except where it marks the two-line home/away jersey rule on `/uniforminfo`.
    `http://www.soccer5or.com/doclib/WILLAMETTE%20PARK.jpg` — a file on the
    league's previous domain. Not carried over.
 
-6. **Five fields have no map link** on the old site and still have none:
-   both Colton schools and all three Molalla fields.
+6. ~~**Five fields have no map link**~~ — resolved 2026-09-07. The two Colton
+   schools and the three Molalla fields were given map links by hand. All 49
+   fields now have one, and all 49 are on the field map.
+
+7. ~~**Which Molalla club owns the Molalla fields?**~~ — resolved 2026-09-07.
+   Heckard Field, Clark Park and Monaz Church are all `Molalla Youth Sports`.
+   This was the one club assignment the `area` → `club` change could not
+   determine from the old data; `Country Christian Soccer` has no fields.
 
 ## Deviation from the plan
 

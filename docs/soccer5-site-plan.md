@@ -205,7 +205,7 @@ one check that must not be deleted when someone reorganizes content later.
 
 ### 4.2 URLs that will break — accepted losses
 
-Not everything is savable. Name these now so nobody spends Phase 5 trying.
+Not everything is savable. Name these now so nobody spends Phase 6 trying.
 
 **Squarespace CDN file URLs.** `/s/<file>.pdf` is not where Squarespace
 actually serves the file; it is a 302 to a `static1.squarespace.com` URL
@@ -233,7 +233,7 @@ Practical consequences:
   Squarespace-internal; recreating that structure on Pages would be pointless
   cargo-culting for links that would still have the wrong hostname.
 - Because the rules PDF link is the one most likely to be saved and the one
-  most certainly broken, Phase 5 includes an explicit "the rules PDF has moved
+  most certainly broken, Phase 6 includes an explicit "the rules PDF has moved
   to `https://soccer5clubs.org/s/<file>.pdf`" note to club contacts. That
   outreach, not a redirect, is the mitigation.
 
@@ -593,7 +593,190 @@ CONTRIBUTING-DEV.md documents the path-prefix test explicitly, since the dev
 server does not reproduce production and that gap has already caused one
 outage (root-absolute `@import`s in CSS, fixed in commit 70e5e2b).
 
-### Phase 5 — Cutover
+### Phase 5 — Field map
+
+An embedded map of all 49 fields on `/fields`, generated at build time from
+`_data/fields.csv`. No third-party service at runtime, no visitor IP leaves
+the site, no JavaScript — consistent with §1's hard constraints.
+
+#### Chosen approach: build-time SVG
+
+A Nunjucks shortcode projects each field's coordinates onto a static county
+basemap and renders one `<a href="#field-slug"><circle/><text/></a>` per
+field, pins colored by host club. Hover label is pure CSS
+(`circle:hover + text { opacity: 1 }`), so it needs no script and degrades to
+"tap to jump to the list entry" on phones, which is most of this audience.
+
+- Basemap: Clackamas County boundary, primary roads, hydrography from Census
+  TIGER/Line (public domain, no attribution required), simplified with
+  `mapshaper` to roughly 100 KB of GeoJSON, committed under `src/data/`.
+- Coordinates: geocoded from each field's `address` column (below), not typed
+  in by volunteers — see below.
+- Same shortcode, given a bounding box, can render a small per-club inset;
+  useful where pins are dense (Willamette United has 14 fields within about
+  15 km — at county scale their pins overlap).
+
+**Fallback:** if the SVG basemap looks too stylized once built, switch to a
+raster PNG composited from OSM tiles by a developer-run script
+(`scripts/render-field-map.js`, run manually, output committed to
+`assets/images/`), with an HTML image map (`<area shape="circle" title="Name
+· Club">`) laid over it for the hover/tap targets. Same coordinate data
+feeds both; switching does not touch `_data/`.
+
+#### Data model changes
+
+`_data/fields.csv`'s leading column, `area`, is renamed `club` and its values
+switch from the current area labels (`Canby`, `Molalla Soccer`, `Valley
+Premier FC Fields`, …) to a `name` in `_data/clubs.csv`. Two optional trailing
+columns are also added:
+
+```
+club,name,grades,address,map_url,notes,lat,lon
+```
+
+`lat`/`lon` are an override, left blank in the normal case. The build's data
+source of truth stays `address` — see below. A volunteer only touches
+`lat`/`lon` if geocoding gets a specific address wrong (a school with the
+field on the far side of a large campus, for instance) and someone looks up
+the correct point by hand; document that as an edge case in README, not the
+normal workflow.
+
+`_data/field_areas.csv` drops its `area` column and gains a required `club`
+column in its place — sections are now titled by club, not by area:
+
+```
+club,dogs,note
+Canby United Soccer Association,,
+```
+
+`validate.js` fails the build if a `club` value, in either file, doesn't
+match a row in `clubs.csv`, the same pattern already used for `permalink` and
+`order`. `field-list.njk` groups `fields.csv` by `club` instead of `area`, and
+the per-club `dogs`/`note` lookup in `field_areas.csv` becomes a match on
+`club` instead of `area`.
+
+#### Geocoding: address-first, committed cache
+
+Volunteers are not going to look up and paste latitude/longitude, and
+shouldn't have to — the address column already exists and is the thing
+they'll actually maintain. But Eleventy's own build (`npm run build`, what
+GitHub Actions runs on every commit) must stay offline per §1, so geocoding
+can't happen inline in the build.
+
+Instead:
+
+1. A developer-run script, `scripts/geocode-fields.js`, reads
+   `fields.csv`, geocodes any row missing `lat`/`lon` via a free geocoder
+   (Nominatim, rate-limited to 1 req/s — this is a one-time, low-volume job,
+   not a runtime dependency), and writes the results to a committed cache,
+   `_data/field_coordinates.json`, keyed by `club|name`.
+2. The Eleventy build reads that cache as ordinary `_data` — no network
+   call, same as any other CSV.
+3. A field with no cache entry and no `lat`/`lon` override is simply left off
+   the map; `validate.js` prints a warning (not a build failure) naming the
+   field, so a volunteer adding a new field notices without the whole site
+   breaking on the next commit.
+4. Re-run `geocode-fields.js` by hand whenever `fields.csv` gets new rows
+   (occasionally) or an address is corrected — commit the updated cache file
+   alongside the CSV change.
+
+#### What needs a human pass before this can be built
+
+From the current data:
+
+- **Every row in `fields.csv` and `field_areas.csv` needs its current `area`
+  value (`Canby`, `Clackamas`, …, 13 in all) replaced with a `club` name from
+  `clubs.csv`.** Twelve are an unambiguous rename (e.g. `Canby` →
+  `Canby United Soccer Association`, applied to every field in that area).
+  One is not: **`Molalla Soccer`**'s fields could belong to `Molalla Youth
+  Sports` or `Country Christian Soccer` — both are Molalla-area clubs in
+  `clubs.csv` — and it's not clear from the current data which club owns
+  which field. Because the join is now per-field rather than per-area, this
+  can be resolved field-by-field instead of forcing one answer for the whole
+  group; either way it needs a decision before `fields.csv` can be rewritten.
+- **Five fields have no map link at all** (checklist item 6): both Colton
+  schools and all three Molalla fields. Their `address` values look
+  geocodable as-is (street address + city), but haven't been verified against
+  a map. Worth a manual check before the first geocode run.
+- **Five more fields have a map link that won't yield coordinates** — either
+  a `goo.gl`/`maps.app.goo.gl` short link (Clackamas High School, Alder Creek
+  Middle School) or a Google "place ID" link with no embedded lat/lon (Baker
+  Prairie Middle School, Mt Scott Elementary, Willamette Park). Not a
+  blocker — geocoding runs off `address`, not `map_url` — but worth spot
+  checking the address text since nothing has ever verified these against a
+  map.
+- **Oregon City has the inconsistency already flagged in checklist item 3:**
+  "Wesley Lynn Park" lists an address on Frontier Pkwy but its map link
+  points at Chapin Park, and the club's note in `field_areas.csv` mentions
+  Chapin Park dogs rules even though no Chapin Park row exists. Resolve which
+  park is which before geocoding Oregon City, or the pin will land in the
+  wrong place silently.
+
+None of this blocks writing the shortcode, the basemap, or `validate.js`
+changes — only the first production geocode run needs it settled.
+
+**Done when:** `/fields` shows a county map with one hover/tap target per
+field with committed coordinates, colored by host club, and `npm run check`
+fails the build if `field_areas.csv` has a `club` that doesn't match
+`clubs.csv`.
+
+Done 2026-09-07. All 49 fields are on the map, `npm run check` is clean, and
+the club column is validated in both CSVs against `clubs.csv`.
+
+#### What was built, and where it departs from this section
+
+- **Pins are not colored by host club.** Fourteen clubs is far past what color
+  can carry: no categorical palette distinguishes fourteen hues, a
+  fourteen-swatch legend is unreadable, and it fails outright for a colorblind
+  reader. It would also have meant fourteen new colors, which `tokens.css`
+  forbids — DESIGN.md's palette is the only source. The clubs are already
+  separated on the map by geography (each plays in its own town), and every pin
+  names its club on hover and links to that club's entry in the list, so the
+  color would have been decoration standing in for information. All pins are
+  the league maroon.
+- **No per-club inset maps.** These were built and then removed. At the zoom a
+  single club needs, rural Clackamas County has no roads, rivers or boundaries
+  to orient against, so each inset was a near-empty rectangle; fourteen of them
+  took the page to 12,600 px tall and 800 KB, pushing the addresses — the thing
+  people actually come for — far down the page. One map, then the list.
+- **The map is one `<figure>` at the top of `/fields`,** not a shortcode
+  volunteers write. Same reasoning as the `data_section` decision in
+  CONTRIBUTING-DEV.md: no template syntax in files volunteers edit.
+- **`fields.csv` gained `lat` and `lon` as planned,** and one row uses them:
+  `Mary S. Young State Park` is "Mary S. Young Park" in OpenStreetMap, so its
+  address matched the middle of Willamette Drive, a kilometre off.
+- **Geocoding needed more than one query per field.** Addresses are written for
+  a parent to read, not for a geocoder: `19010 S. Fischer's Mill Rd.` fails on
+  the apostrophe and the abbreviation, and Ninety-One Grade School has a Hubbard
+  mailing address but sits over the county line. The script tries the address,
+  then the address spelled out, then the street alone, then the field's name,
+  and keeps the most precise answer rather than the first. It rejects a match on
+  a whole town, and prefers a named park or school over a road, because a road
+  match is only its midpoint — Athey Creek Middle School first came back 3.5 km
+  away down a long Borland Road.
+- **The results were checked, not assumed.** 38 of the 49 fields have a Google
+  Maps link with coordinates embedded in it; geocoding independently landed
+  within 400 m of the league's own pin on all but two, and both of those were
+  investigated. This is worth repeating after any bulk address change.
+
+The basemap in `src/data/basemap.geojson` was cut from Census TIGER/Line 2023
+(`GENZ2023/shp/cb_2023_us_county_500k.zip`, `TIGER2023/PRISECROADS/
+tl_2023_41_prisecroads.zip`, and AREAWATER + LINEARWATER for counties 41005,
+41047, 41051, 41067 and 41071), clipped to `-122.90,45.10,-122.28,45.50`,
+filtered to MTFCC S1100/S1200 for roads and to water over 0.15 km², simplified
+with `mapshaper` to 88 KB at 4-decimal precision, and tagged with a
+`properties.layer` of `county`, `road` or `water`. It should never need
+regenerating; if it does, CONTRIBUTING-DEV.md points here and the `DRAWN`
+constant in `src/field-map.js` has to move with the clip box.
+
+Two things were deliberately left alone. **Memorial Park** geocodes to its
+street address rather than the middle of the park, 580 m from the league's own
+pin — for someone driving there the entrance is the better point. And on a
+phone the pins are about 10 px across: with 49 fields spread over 40 km on a
+335 px map, no hit target makes them individually tappable, which is why the
+list below carries every address and Google Maps link independently of the map.
+
+### Phase 6 — Cutover
 - Add `CNAME` file (via Pages custom-domain setting, which commits it).
 - DNS: `A` records for apex to GitHub Pages IPs, `CNAME` for `www` →
   `<org>.github.io`. Enable "Enforce HTTPS" once the cert issues.
@@ -639,120 +822,3 @@ domain, and Squarespace billing is off.
 - The two rules PDFs are named `...2025-2026-...`. Confirm the intended
   policy for next season: new file alongside the old, old URL left alive.
 
----
-
-## 11. Field map (Phase 5)
-
-An embedded map of all 49 fields on `/fields`, generated at build time from
-`_data/fields.csv`. No third-party service at runtime, no visitor IP leaves
-the site, no JavaScript — consistent with §1's hard constraints.
-
-### 11.1 Chosen approach: build-time SVG
-
-A Nunjucks shortcode projects each field's coordinates onto a static county
-basemap and renders one `<a href="#field-slug"><circle/><text/></a>` per
-field, pins colored by host club. Hover label is pure CSS
-(`circle:hover + text { opacity: 1 }`), so it needs no script and degrades to
-"tap to jump to the list entry" on phones, which is most of this audience.
-
-- Basemap: Clackamas County boundary, primary roads, hydrography from Census
-  TIGER/Line (public domain, no attribution required), simplified with
-  `mapshaper` to roughly 100 KB of GeoJSON, committed under `src/data/`.
-- Coordinates: geocoded from each field's `address` column (§11.3), not typed
-  in by volunteers — see below.
-- Same shortcode, given a bounding box, can render a small per-club inset;
-  useful where pins are dense (Willamette United has 14 fields within about
-  15 km — at county scale their pins overlap).
-
-**Fallback:** if the SVG basemap looks too stylized once built, switch to a
-raster PNG composited from OSM tiles by a developer-run script
-(`scripts/render-field-map.js`, run manually, output committed to
-`assets/images/`), with an HTML image map (`<area shape="circle" title="Name
-· Club">`) laid over it for the hover/tap targets. Same coordinate data
-feeds both; switching does not touch `_data/`.
-
-### 11.2 Data model changes
-
-`_data/fields.csv` gains two optional trailing columns:
-
-```
-area,name,grades,address,map_url,notes,lat,lon
-```
-
-`lat`/`lon` are an override, left blank in the normal case. The build's data
-source of truth stays `address` — see §11.3. A volunteer only touches
-`lat`/`lon` if geocoding gets a specific address wrong (a school with the
-field on the far side of a large campus, for instance) and someone looks up
-the correct point by hand; document that as an edge case in README, not the
-normal workflow.
-
-`_data/field_areas.csv` gains a required `club` column, joining each area to
-a `name` in `_data/clubs.csv`:
-
-```
-area,club,dogs,note
-Canby,Canby United Soccer Association,,
-```
-
-`validate.js` fails the build if a `club` value doesn't match a row in
-`clubs.csv`, the same pattern already used for `permalink` and `order`.
-
-### 11.3 Geocoding: address-first, committed cache
-
-Volunteers are not going to look up and paste latitude/longitude, and
-shouldn't have to — the address column already exists and is the thing
-they'll actually maintain. But Eleventy's own build (`npm run build`, what
-GitHub Actions runs on every commit) must stay offline per §1, so geocoding
-can't happen inline in the build.
-
-Instead:
-
-1. A developer-run script, `scripts/geocode-fields.js`, reads
-   `fields.csv`, geocodes any row missing `lat`/`lon` via a free geocoder
-   (Nominatim, rate-limited to 1 req/s — this is a one-time, low-volume job,
-   not a runtime dependency), and writes the results to a committed cache,
-   `_data/field_coordinates.json`, keyed by `area|name`.
-2. The Eleventy build reads that cache as ordinary `_data` — no network
-   call, same as any other CSV.
-3. A field with no cache entry and no `lat`/`lon` override is simply left off
-   the map; `validate.js` prints a warning (not a build failure) naming the
-   field, so a volunteer adding a new field notices without the whole site
-   breaking on the next commit.
-4. Re-run `geocode-fields.js` by hand whenever `fields.csv` gets new rows
-   (occasionally) or an address is corrected — commit the updated cache file
-   alongside the CSV change.
-
-### 11.4 What needs a human pass before this can be built
-
-From the current data:
-
-- **`field_areas.csv` needs a `club` value for all 13 areas.** Twelve are an
-  unambiguous name match against `clubs.csv` (e.g. `Canby` →
-  `Canby United Soccer Association`). One is not: **`Molalla Soccer`** could
-  map to `Molalla Youth Sports` or `Country Christian Soccer` — both are
-  Molalla-area clubs in `clubs.csv`, and it's not clear from the current data
-  which one (or both) fields these fields belong to. Needs a decision.
-- **Five fields have no map link at all** (checklist item 6): both Colton
-  schools and all three Molalla fields. Their `address` values look
-  geocodable as-is (street address + city), but haven't been verified against
-  a map. Worth a manual check before the first geocode run.
-- **Five more fields have a map link that won't yield coordinates** — either
-  a `goo.gl`/`maps.app.goo.gl` short link (Clackamas High School, Alder Creek
-  Middle School) or a Google "place ID" link with no embedded lat/lon (Baker
-  Prairie Middle School, Mt Scott Elementary, Willamette Park). Not a
-  blocker — geocoding runs off `address`, not `map_url` — but worth spot
-  checking the address text since nothing has ever verified these against a
-  map.
-- **Oregon City has the inconsistency already flagged in checklist item 3:**
-  "Wesley Lynn Park" lists an address on Frontier Pkwy but its map link
-  points at Chapin Park, and the area note mentions Chapin Park dogs rules
-  even though no Chapin Park row exists. Resolve which park is which before
-  geocoding Oregon City, or the pin will land in the wrong place silently.
-
-None of this blocks writing the shortcode, the basemap, or `validate.js`
-changes — only the first production geocode run needs it settled.
-
-**Done when:** `/fields` shows a county map with one hover/tap target per
-field with committed coordinates, colored by host club, and `npm run check`
-fails the build if `field_areas.csv` has a `club` that doesn't match
-`clubs.csv`.

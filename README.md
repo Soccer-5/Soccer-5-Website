@@ -116,15 +116,26 @@ goes — paste the whole address, starting with `https://`.
 
 Same idea, in `_data`:
 
-- **`fields.csv`** — one line per field: `area, name, grades, address, map_url, notes`
-  The `area` groups fields under a heading and must match a line in
-  `field_areas.csv`.
-- **`field_areas.csv`** — one line per area: `area, dogs, note`
-  This is where the dog policy and parking notes live.
+- **`fields.csv`** — one line per field:
+  `club, name, grades, address, map_url, notes, lat, lon`
+  The `club` groups fields under a heading on the page and has to match that
+  club's name in `clubs.csv` exactly. Leave `lat` and `lon` empty — they are
+  for a developer correcting a field's position on the map (see
+  CONTRIBUTING-DEV.md), not something a volunteer needs to fill in.
+- **`field_areas.csv`** — one line per club: `club, dogs, note`
+  This is where the dog policy and parking notes live. The `club` has to match
+  `clubs.csv` here too.
 - **`uniforms.csv`** — one line per club: `club, jerseys, colors`
 
 The same three rules as the club list apply: keep the first line, quote
 anything containing a comma, leave unknown values empty.
+
+**About the map on the Fields page.** It is drawn from the addresses, and a
+field you add will show up in the list right away but *not* on the map — a
+developer has to add its position first. Nothing breaks in the meantime: the
+build still succeeds and the field is listed with its address as usual. Ask
+whoever maintains the site to run the positions step, and mention the new
+field's name.
 
 ---
 

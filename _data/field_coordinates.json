@@ -1,0 +1,443 @@
+{
+  "Canby United Soccer Association|Baker Prairie Middle School": {
+    "lat": 45.259335,
+    "lon": -122.671673,
+    "matched": "1859, South Township Road, Canby, Clackamas County, Oregon, 97013, United States",
+    "kind": "place",
+    "score": 2,
+    "rank": 30,
+    "searched": "1859 S. Township Rd., Canby, OR"
+  },
+  "Canby United Soccer Association|Legacy Park": {
+    "lat": 45.252482,
+    "lon": -122.681769,
+    "matched": "1200, Southeast 13th Avenue, Canby, Clackamas County, Oregon, 97013, United States",
+    "kind": "building",
+    "score": 2,
+    "rank": 30,
+    "searched": "1200 SE 13th Ave., Canby, OR"
+  },
+  "Canby United Soccer Association|Trost Elementary": {
+    "lat": 45.257526,
+    "lon": -122.674478,
+    "matched": "Trost Elementary School, 800, South Redwood Street, Canby, Clackamas County, Oregon, 97013, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "800 S. Redwood St., Canby, OR"
+  },
+  "Clackamas United Soccer Club|Clackamas High School": {
+    "lat": 45.417025,
+    "lon": -122.53262,
+    "matched": "Clackamas High School, 14486, Southeast 122nd Avenue, Clackamas, Clackamas County, Oregon, 97015, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "14486 SE 122nd Ave Clackamas, OR"
+  },
+  "Clackamas United Soccer Club|Happy Valley Elementary": {
+    "lat": 45.447746,
+    "lon": -122.518009,
+    "matched": "13865, Southeast King Road, Happy Valley, Clackamas County, Oregon, 97086, United States",
+    "kind": "building",
+    "score": 2,
+    "rank": 30,
+    "searched": "13865 SE King Rd., Happy Valley, OR"
+  },
+  "Clackamas United Soccer Club|Happy Valley Park": {
+    "lat": 45.453297,
+    "lon": -122.521286,
+    "matched": "13770, Southeast Ridgecrest Road, Happy Valley, Clackamas County, Oregon, 97086, United States",
+    "kind": "building",
+    "score": 2,
+    "rank": 30,
+    "searched": "13770 SE Ridgecrest Rd., Happy Valley, OR"
+  },
+  "Clackamas United Soccer Club|Mt Scott Elementary": {
+    "lat": 45.442546,
+    "lon": -122.564666,
+    "matched": "11201, Southeast Stevens Road, Happy Valley, Clackamas County, Oregon, 97086, United States",
+    "kind": "building",
+    "score": 2,
+    "rank": 30,
+    "searched": "11201 SE Stevens Rd., Happy Valley, OR"
+  },
+  "Clackamas United Soccer Club|Oregon Trail Elementary": {
+    "lat": 45.422069,
+    "lon": -122.508445,
+    "matched": "Oregon Trail Elementary School, 13895, Southeast 152nd Drive, Happy Valley, Clackamas County, Oregon, 97015, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "13895 SE 152nd Dr., Clackamas, OR"
+  },
+  "Clackamas United Soccer Club|Pfeifer Park": {
+    "lat": 45.420491,
+    "lon": -122.520974,
+    "matched": "14074, Southeast 139th Avenue, Happy Valley, Clackamas County, Oregon, 97015, United States",
+    "kind": "building",
+    "score": 2,
+    "rank": 30,
+    "searched": "14074 SE 139th Ave., Clackamas, OR"
+  },
+  "Clackamas United Soccer Club|Spring Mountain Elementary": {
+    "lat": 45.437264,
+    "lon": -122.534957,
+    "matched": "Spring Mountain Elementary School, 11645, Southeast Masa Lane, Happy Valley, Clackamas County, Oregon, 97086, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "11645 SE Masa Ln., Happy Valley, OR"
+  },
+  "Colton Youth Soccer|Colton Elementary School": {
+    "lat": 45.166435,
+    "lon": -122.416799,
+    "matched": "Colton School District 53, 30429, South Grays Hill Road, Old Colton, Clackamas County, Oregon, 97017, United States",
+    "kind": "office",
+    "score": 2,
+    "rank": 30,
+    "searched": "30429 S Grays Hill Road, Colton, OR 97017"
+  },
+  "Colton Youth Soccer|Colton Middle School": {
+    "lat": 45.165556,
+    "lon": -122.423056,
+    "matched": "Colton Middle School, South Farmington Hills Lane, Old Colton, Clackamas County, Oregon, 97017, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "Colton Middle School, Colton, OR"
+  },
+  "Estacada Youth Soccer Association|Estacada High School": {
+    "lat": 45.297331,
+    "lon": -122.33099,
+    "matched": "Estacada High School, 355, Northeast 6th Avenue, Estacada, Clackamas County, Oregon, 97023, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "355 Northeast 6th Avenue, Estacada, OR"
+  },
+  "Estacada Youth Soccer Association|River Mill Elementary": {
+    "lat": 45.297207,
+    "lon": -122.33417,
+    "matched": "River Mill Elementary School, 850, North Broadway Street, Estacada, Clackamas County, Oregon, 97023, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "850 N Broadway, Estacada, OR"
+  },
+  "Estacada Youth Soccer Association|Timber Park": {
+    "lat": 45.298606,
+    "lon": -122.346231,
+    "matched": "Northwest Evergreen Way, Estacada, Clackamas County, Oregon, 97023, United States",
+    "kind": "road",
+    "score": 1,
+    "rank": 26,
+    "searched": "30878 NW Evergreen Way, Estacada, OR"
+  },
+  "Gladstone Soccer Association|Meldrum Bar Park": {
+    "lat": 45.377018,
+    "lon": -122.616459,
+    "matched": "19, Meldrum Bar Park Road, Glen Echo, Gladstone, Clackamas County, Oregon, 97027, United States",
+    "kind": "place",
+    "score": 2,
+    "rank": 30,
+    "searched": "19 Meldrum Bar Park Road, Gladstone, OR"
+  },
+  "Lake Oswego Soccer Club|George Rogers Park": {
+    "lat": 45.412109,
+    "lon": -122.663545,
+    "matched": "611, South State Street, Lakewood, South Lake Oswego, Lake Oswego, Clackamas County, Oregon, 97034, United States",
+    "kind": "building",
+    "score": 2,
+    "rank": 30,
+    "searched": "611 State St., Lake Oswego, OR"
+  },
+  "Lake Oswego Soccer Club|Hazelia Field at Luscher Farms": {
+    "lat": 45.396692,
+    "lon": -122.688123,
+    "matched": "17800, Southwest Stafford Road, Palisades, Lake Oswego, Clackamas County, Oregon, 97034, United States",
+    "kind": "place",
+    "score": 2,
+    "rank": 30,
+    "searched": "17800 SW Stafford Rd., Lake Oswego, OR"
+  },
+  "Lake Oswego Soccer Club|Lakeridge Middle School": {
+    "lat": 45.395592,
+    "lon": -122.725643,
+    "matched": "Lakeridge Middle School, 4700, Jean Road, Bryant, Jean, Lake Oswego, Clackamas County, Oregon, 97035, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "Lakeridge Middle School, 7400 Jean Rd., OR"
+  },
+  "Lake Oswego Soccer Club|Palisades Elementary": {
+    "lat": 45.40187,
+    "lon": -122.691544,
+    "matched": "1500, Greentree Road, Palisades, Lake Oswego, Clackamas County, Oregon, 97034, United States",
+    "kind": "building",
+    "score": 2,
+    "rank": 30,
+    "searched": "1500 Greentree Rd., Lake Oswego, OR"
+  },
+  "Lake Oswego Soccer Club|Westridge Elementary": {
+    "lat": 45.394644,
+    "lon": -122.711999,
+    "matched": "Westridge Elementary School, 3400, Royce Way, Westridge, Jean, Lake Oswego, Clackamas County, Oregon, 97035, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "3400 Royce Way, Lake Oswego, OR"
+  },
+  "Molalla Youth Sports|Clark Park": {
+    "lat": 45.150516,
+    "lon": -122.563438,
+    "matched": "Molalla Buckaroo Association, 815, Shirley Street, Molalla, Clackamas County, Oregon, 97038, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "815 Shirley Street, Molalla, OR 97038"
+  },
+  "Molalla Youth Sports|Heckard Field": {
+    "lat": 45.145452,
+    "lon": -122.568578,
+    "matched": "638, East Main Street, Molalla, Clackamas County, Oregon, 97038, United States",
+    "kind": "place",
+    "score": 2,
+    "rank": 30,
+    "searched": "638 E. Main Street, Molalla, OR 97038"
+  },
+  "Molalla Youth Sports|Monaz Church": {
+    "lat": 45.147731,
+    "lon": -122.56096,
+    "matched": "920, Shirley Street, Molalla, Clackamas County, Oregon, 97038, United States",
+    "kind": "place",
+    "score": 2,
+    "rank": 30,
+    "searched": "920 Shirley Street, Molalla, OR 97038"
+  },
+  "North Clackamas Soccer Club|Alder Creek Middle School": {
+    "lat": 45.423115,
+    "lon": -122.59607,
+    "matched": "Alder Creek Middle School, 13801, Southeast Webster Road, Oatfield, Milwaukie, Clackamas County, Oregon, 97267, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "13801 SE Webster Rd., Milwaukie, OR"
+  },
+  "North Clackamas Soccer Club|Sabin-Schellenberg Professional Center": {
+    "lat": 45.418685,
+    "lon": -122.57897,
+    "matched": "14450, Southeast Johnson Road, Oatfield, Portland, Clackamas County, Oregon, 97267, United States",
+    "kind": "building",
+    "score": 2,
+    "rank": 30,
+    "searched": "14450 Southeast Johnson Road, OR"
+  },
+  "North Clackamas Soccer Club|View Acres Elementary": {
+    "lat": 45.417303,
+    "lon": -122.612791,
+    "matched": "View Acres Elementary School, 4828, Southeast View Acres Road, Lake Road, Milwaukie, Clackamas County, Oregon, 97267, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "4828 SE View Acres Rd., Milwaukie, OR"
+  },
+  "North Marion Youth Athletics|North Marion Middle School": {
+    "lat": 45.213338,
+    "lon": -122.795684,
+    "matched": "North Marion Middle School, 20246, Grim Road Northeast, Aurora, Marion County, Oregon, 97002, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "20246 Grim Rd., NE Aurora, OR"
+  },
+  "Oregon City Soccer Club|Fischer's Mill Sports Complex": {
+    "lat": 45.344942,
+    "lon": -122.475368,
+    "matched": "19010, South Fischers Mill Road, Redland, Oregon City, Clackamas County, Oregon, 97045, United States",
+    "kind": "building",
+    "score": 2,
+    "rank": 30,
+    "searched": "19010 South Fischers Mill Road, Oregon City"
+  },
+  "Oregon City Soccer Club|King Elementary": {
+    "lat": 45.339544,
+    "lon": -122.620904,
+    "matched": "King Campus, 995, South End Road, South End, Oregon City, Clackamas County, Oregon, 97045, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "995 South End Road, Oregon City"
+  },
+  "Oregon City Soccer Club|Wesley Lynn Park": {
+    "lat": 45.321981,
+    "lon": -122.604325,
+    "matched": "12901, Frontier Parkway, Hillendale, Oregon City, Clackamas County, Oregon, 97045, United States",
+    "kind": "building",
+    "score": 2,
+    "rank": 30,
+    "searched": "12901 Frontier Pkwy, Oregon City, OR 97045"
+  },
+  "Valley Premier FC|Valley Premier FC Fields": {
+    "lat": 45.4099,
+    "lon": -122.4215,
+    "matched": "Deep Creek-Damascus School, 15600, Southeast 232nd Drive, Barton, Damascus, Clackamas County, Oregon, 97089, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "15600 SE 232nd Dr., Damascus, OR"
+  },
+  "Whiskey Hill Kids Soccer Club|Ninety-One Grade School": {
+    "lat": 45.176474,
+    "lon": -122.747519,
+    "matched": "5811, South Whiskey Hill Road, Clackamas County, Oregon, 97032, United States",
+    "kind": "place",
+    "score": 2,
+    "rank": 30,
+    "searched": "5811 South Whiskey Hill Road, OR"
+  },
+  "Willamette United Football Club|Athey Creek Middle School": {
+    "lat": 45.378462,
+    "lon": -122.706478,
+    "matched": "Riverside High School, 2900, Southwest Borland Road, Stafford, Tualatin, Clackamas County, Oregon, 97034, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "2900 Southwest Borland Road, OR"
+  },
+  "Willamette United Football Club|Boones Ferry Primary": {
+    "lat": 45.300248,
+    "lon": -122.795578,
+    "matched": "Boones Ferry Primary School, 11495, Southwest Wilsonville Road, Wilsonville, Clackamas County, Oregon, 97070, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "11495 SW Wilsonville Rd., Wilsonville, OR"
+  },
+  "Willamette United Football Club|Cedar Oak Primary": {
+    "lat": 45.388487,
+    "lon": -122.634139,
+    "matched": "Cedaroak Park Primary School, 4515, Cedaroak Drive, Robinwood, West Linn, Clackamas County, Oregon, 97036, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "4515 Cedar Oak Dr., West Linn, OR"
+  },
+  "Willamette United Football Club|Hammerle Park": {
+    "lat": 45.368769,
+    "lon": -122.616925,
+    "matched": "1505, Lewis Street, Bolton, West Linn, Clackamas County, Oregon, 97068, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "1505 Lewis St., West Linn, OR"
+  },
+  "Willamette United Football Club|Horizon Christian High School": {
+    "lat": 45.35151,
+    "lon": -122.772136,
+    "matched": "Horizon Christian High School, 23370, Southwest Boones Ferry Road, Tualatin, Washington County, Oregon, 97062, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "23370 SW Boones Ferry Rd., Tualatin, OR"
+  },
+  "Willamette United Football Club|Lowrie Primary": {
+    "lat": 45.310535,
+    "lon": -122.786884,
+    "matched": "Lowrie Primary School, 28995, Southwest Brown Road, Villebois, Wilsonville, Clackamas County, Oregon, 97070, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "28995 SW Brown Rd., Wilsonville, OR"
+  },
+  "Willamette United Football Club|Mary S. Young State Park": {
+    "lat": 45.386513,
+    "lon": -122.640719,
+    "matched": "Willamette Drive, Robinwood, Rosemont, West Linn, Clackamas County, Oregon, 97036, United States",
+    "kind": "road",
+    "score": 1,
+    "rank": 26,
+    "searched": "19900 Willamette Dr., West Linn, OR"
+  },
+  "Willamette United Football Club|Memorial Park": {
+    "lat": 45.302858,
+    "lon": -122.759599,
+    "matched": "8100, Southwest Wilsonville Road, Wilsonville Town Center, Wilsonville, Clackamas County, Oregon, 97070, United States",
+    "kind": "place",
+    "score": 2,
+    "rank": 30,
+    "searched": "8100 SW Wilsonville Rd., Wilsonville, OR"
+  },
+  "Willamette United Football Club|Meridian Creek Middle School": {
+    "lat": 45.314658,
+    "lon": -122.740512,
+    "matched": "Meridian Creek Middle School, 6300, Southwest Hazel Street, Wilsonville, Clackamas County, Oregon, 97070, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "6300 SW Hazel St., Wilsonville, OR"
+  },
+  "Willamette United Football Club|Oppenlander Park": {
+    "lat": 45.368626,
+    "lon": -122.642089,
+    "matched": "1275, Rosemont Road, Rosemont Summit, Rosemont, West Linn, Clackamas County, Oregon, 97068, United States",
+    "kind": "building",
+    "score": 2,
+    "rank": 30,
+    "searched": "1275 Rosemont Rd., West Linn, OR"
+  },
+  "Willamette United Football Club|Rosemont Ridge Middle School": {
+    "lat": 45.368744,
+    "lon": -122.64943,
+    "matched": "Rosemont Ridge Middle School, 20001, Salamo Road, Parker Crest, Rosemont, West Linn, Clackamas County, Oregon, 97068, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "20001 Salamo Rd., West Linn, OR"
+  },
+  "Willamette United Football Club|Sunset Primary": {
+    "lat": 45.361095,
+    "lon": -122.626137,
+    "matched": "Sunset Primary School, 2351, Oxford Street, Sunset, Rosemont, West Linn, Clackamas County, Oregon, 97068, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "2351 Oxford St., West Linn, OR"
+  },
+  "Willamette United Football Club|Trillium Creek Primary": {
+    "lat": 45.37481,
+    "lon": -122.651713,
+    "matched": "Trillium Creek Primary School, 1025, Rosemont Road, Hidden Springs, Rosemont, West Linn, Clackamas County, Oregon, 97068, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "1025 Rosemont Rd., West Linn, OR"
+  },
+  "Willamette United Football Club|Willamette Park": {
+    "lat": 45.339215,
+    "lon": -122.652526,
+    "matched": "1100, 12th Street, Willamette, West Linn, Clackamas County, Oregon, 97068, United States",
+    "kind": "building",
+    "score": 2,
+    "rank": 30,
+    "searched": "1100 - 12th St., West Linn, OR 97068"
+  },
+  "Willamette United Football Club|Wilsonville HS": {
+    "lat": 45.306801,
+    "lon": -122.746661,
+    "matched": "Wilsonville High School, 6800, Southwest Wilsonville Road, Wilsonville, Clackamas County, Oregon, 97070, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "6800 SW Wilsonville Rd., Wilsonville, OR"
+  },
+  "Willamette United Football Club|Wood Middle School": {
+    "lat": 45.300731,
+    "lon": -122.792201,
+    "matched": "Wood Middle School, 11055, Southwest Wilsonville Road, Wilsonville, Clackamas County, Oregon, 97070, United States",
+    "kind": "amenity",
+    "score": 2,
+    "rank": 30,
+    "searched": "11055 SW Wilsonville Rd., Wilsonville, OR"
+  }
+}
