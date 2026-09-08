@@ -16,6 +16,7 @@
 import fs from "node:fs";
 
 const BASEMAP = "src/data/basemap.geojson";
+const TOKENS = "src/css/tokens.css";
 
 // Degrees of breathing room between the outermost field and the frame.
 const PADDING = 0.02;
@@ -122,6 +123,31 @@ const loadBasemap = () => {
   return basemap;
 };
 
+// SVG's default fill is black, so a map that gets every colour from the
+// stylesheet is a black square for as long as that stylesheet is missing —
+// while it is still loading, or for the ten minutes GitHub Pages will serve a
+// visitor a stale copy after a deploy. So each shape also carries its colour as
+// a presentation attribute. Those sit below any stylesheet rule in the cascade,
+// so site.css still owns the styling; they only decide what is drawn before it
+// arrives.
+//
+// The values are read out of tokens.css rather than repeated here, because that
+// file is the one source of colour for this site and a second copy would drift
+// from it silently.
+let palette = null;
+const token = (name) => {
+  if (!palette) {
+    palette = {};
+    const css = fs.readFileSync(TOKENS, "utf8");
+    for (const [, key, value] of css.matchAll(/(--color-[\w-]+):\s*([^;]+);/g)) {
+      palette[key] = value.trim();
+    }
+  }
+  const value = palette[`--color-${name}`];
+  if (!value) throw new Error(`field-map: --color-${name} is not in ${TOKENS}`);
+  return value;
+};
+
 // Every field that has a point, in the order it appears in fields.csv.
 const locate = (fields, coordinates) =>
   fields
@@ -139,14 +165,15 @@ const WIDTH = 1000;
 const drawBase = (view) => {
   const { county, road, waterArea, waterLine } = loadBasemap();
   const layers = [
-    ["fieldmap__water", waterArea, true],
-    ["fieldmap__river", waterLine, false],
-    ["fieldmap__road", road, false],
-    ["fieldmap__county", county, true],
+    ["fieldmap__water", waterArea, true, `fill="${token("stone")}"`],
+    ["fieldmap__river", waterLine, false, `fill="none" stroke="${token("stone")}" stroke-width="2.5"`],
+    ["fieldmap__road", road, false, `fill="none" stroke="${token("ash")}" stroke-width="1.2"`],
+    ["fieldmap__county", county, true, `fill="none" stroke="${token("smoke")}" stroke-width="1"`],
   ];
   return layers
     .filter(([, features]) => features.length)
-    .map(([cls, features, close]) => `<path class="${cls}" d="${pathFor(features, view, close)}"/>`)
+    .map(([cls, features, close, paint]) =>
+      `<path class="${cls}" ${paint} d="${pathFor(features, view, close)}"/>`)
     .join("");
 };
 
@@ -177,9 +204,12 @@ export function leagueMap(fields, coordinates) {
         // An invisible disc twice the pin's size, so a finger can hit it. Kept
         // modest on purpose: the clubs with fields a few streets apart would
         // otherwise have hit areas swallowing each other.
-        `<circle class="fieldmap__hit" cx="${x}" cy="${y}" r="15"/>` +
-        `<circle class="fieldmap__dot" cx="${x}" cy="${y}" r="7"/>` +
-        `<text x="${x}" y="${Math.round((y - 14) * 10) / 10}" text-anchor="middle">${escape(field.name)}</text>` +
+        `<circle class="fieldmap__hit" cx="${x}" cy="${y}" r="15" fill="none"/>` +
+        `<circle class="fieldmap__dot" cx="${x}" cy="${y}" r="7" ` +
+        `fill="${token("accent")}" stroke="${token("canvas")}" stroke-width="2"/>` +
+        // Hidden until hover or focus. Without this the labels for all 49
+        // fields would be painted at once before the stylesheet loads.
+        `<text x="${x}" y="${Math.round((y - 14) * 10) / 10}" text-anchor="middle" opacity="0">${escape(field.name)}</text>` +
         `</a>`
       );
     })
