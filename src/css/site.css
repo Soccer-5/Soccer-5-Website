@@ -367,6 +367,122 @@ body {
   color: var(--color-graphite);
 }
 
+/* ---- Field map ----------------------------------------------------------
+ *
+ * Built as inline SVG by src/field-map.js. No script: the label over a pin is
+ * :hover and :focus, and every pin is a link down to that field's entry in the
+ * list, so a tap on a phone lands on the address.
+ *
+ * Every colour here is a DESIGN.md token used for non-text drawing, which is
+ * what --color-smoke and --color-ash are allowed to do. The stack reads
+ * darkest-last: water, then roads, then the county outline, then the pins.
+ */
+
+.field-map-figure {
+  max-width: 46rem;
+  margin: 0 0 var(--space-48);
+}
+
+.field-map-figure figcaption {
+  margin-top: var(--space-8);
+  font-size: var(--text-body-sm);
+  color: var(--color-graphite);
+}
+
+.fieldmap {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--color-linen);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius);
+}
+
+.fieldmap__water {
+  fill: var(--color-stone);
+  stroke: none;
+}
+
+.fieldmap__river {
+  fill: none;
+  stroke: var(--color-stone);
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.fieldmap__road {
+  fill: none;
+  stroke: var(--color-ash);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.fieldmap__county {
+  fill: none;
+  stroke: var(--color-smoke);
+  stroke-width: 1;
+  stroke-dasharray: 5 4;
+  vector-effect: non-scaling-stroke;
+}
+
+.fieldmap__dot {
+  fill: var(--color-accent);
+  stroke: var(--color-canvas);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The finger-sized target sitting under each pin. */
+.fieldmap__hit {
+  fill: transparent;
+  stroke: none;
+}
+
+/* Sized in the map's own units, so it lands near 14px once the SVG is scaled
+   down to the column width. */
+.fieldmap__pin text {
+  font-family: var(--font-sans);
+  font-size: 19px;
+  fill: var(--color-ink);
+  paint-order: stroke;
+  stroke: var(--color-canvas);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The label is a nicety for a mouse and a keyboard. Touch gets the link. */
+.fieldmap__pin:hover text,
+.fieldmap__pin:focus text,
+.fieldmap__pin:focus-visible text {
+  opacity: 1;
+}
+
+.fieldmap__pin:hover .fieldmap__dot,
+.fieldmap__pin:focus .fieldmap__dot {
+  fill: var(--color-ink);
+}
+
+/* A pin's own outline would be lost against the map, so ring it instead. */
+.fieldmap__pin:focus-visible {
+  outline: none;
+}
+
+.fieldmap__pin:focus-visible .fieldmap__dot {
+  stroke: var(--color-ink);
+  stroke-width: 3;
+}
+
+/* Landing on a field from a pin: mark the row that was jumped to. */
+.field:target {
+  border-top-color: var(--color-accent);
+}
+
+.field:target .field-name {
+  color: var(--color-accent);
+}
+
 /* ---- Uniform table ------------------------------------------------------ */
 
 .uniform-table {

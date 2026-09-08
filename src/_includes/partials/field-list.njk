@@ -1,17 +1,26 @@
-{# Renders _data/fields.csv grouped by area, with per-area notes from
-   _data/field_areas.csv. Area order follows the order rows appear in the CSV. #}
-{%- for group in fields | groupBy("area") %}
-<section class="field-area">
+{# Renders _data/fields.csv grouped by club, with per-club notes from
+   _data/field_areas.csv. Club order follows the order rows appear in the CSV.
+
+   Each club section opens with a small map of that club's fields, and the page
+   opens with one map of the whole league. Both are built by src/field-map.js
+   and are plain SVG: every pin is a link down to that field's entry here. #}
+<figure class="field-map-figure">
+  {% leagueMap fields, field_coordinates %}
+  <figcaption>Every Soccer-5 field. Each marker links to that field's address in the list below.</figcaption>
+</figure>
+
+{%- for group in fields | groupBy("club") %}
+<section class="field-area" id="club-{{ group.name | slug }}">
   <h2>{{ group.name }}</h2>
   {%- for area in field_areas %}
-    {%- if area.area == group.name %}
+    {%- if area.club == group.name %}
       {%- if area.dogs %}<p class="field-area-dogs">{{ area.dogs }}</p>{% endif %}
       {%- if area.note %}<p class="field-area-note">{{ area.note }}</p>{% endif %}
     {%- endif %}
   {%- endfor %}
   <ul class="field-list">
     {%- for field in group.items %}
-    <li class="field">
+    <li class="field" id="field-{{ (group.name ~ '-' ~ field.name) | slug }}">
       <h3 class="field-name">{{ field.name }}{% if field.grades %} <span class="field-grades">({{ field.grades }})</span>{% endif %}</h3>
       {%- if field.address %}<p class="field-address">{{ field.address }}</p>{% endif %}
       {%- if field.notes %}<p class="field-notes">{{ field.notes }}</p>{% endif %}

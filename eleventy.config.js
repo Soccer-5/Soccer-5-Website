@@ -6,6 +6,7 @@
 
 import { HtmlBasePlugin } from "@11ty/eleventy";
 import { parse } from "csv-parse/sync";
+import { leagueMap, slugify } from "./src/field-map.js";
 
 export default function (eleventyConfig) {
   // Rewrites root-relative URLs in the built HTML to include pathPrefix, so
@@ -52,6 +53,15 @@ export default function (eleventyConfig) {
     }
     return [...out].map(([name, items]) => ({ name, items }));
   });
+
+  // The field map, drawn as SVG at build time. See src/field-map.js — the page
+  // ships no JavaScript, so the map is markup and CSS only.
+  eleventyConfig.addFilter("slug", slugify);
+  eleventyConfig.addShortcode("leagueMap", leagueMap);
+
+  // Rebuild the page when the map's inputs change, not just its templates.
+  eleventyConfig.addWatchTarget("src/data/basemap.geojson");
+  eleventyConfig.addWatchTarget("src/field-map.js");
 
   eleventyConfig.setInputDirectory(".");
   eleventyConfig.setOutputDirectory("_site");

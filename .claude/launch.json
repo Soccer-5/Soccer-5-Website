@@ -6,6 +6,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["@11ty/eleventy", "--serve", "--port=8080"],
       "port": 8080
+    },
+    {
+      "name": "soccer5-prefixed",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8123", "--directory", "/tmp/pfx"],
+      "port": 8123
     }
   ]
 }

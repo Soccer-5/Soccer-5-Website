@@ -145,18 +145,40 @@ clubs.forEach((row, i) => {
   }
 });
 
-const fields = readCsv("_data/fields.csv", ["area", "name", "grades", "address", "map_url", "notes"]);
-const areas = readCsv("_data/field_areas.csv", ["area", "dogs", "note"]);
-const areaNames = new Set(areas.map((a) => a.area));
+const clubNames = new Set(clubs.map((c) => c.name));
+
+const fields = readCsv("_data/fields.csv", ["club", "name", "grades", "address", "map_url", "notes", "lat", "lon"]);
+const areas = readCsv("_data/field_areas.csv", ["club", "dogs", "note"]);
+const areaClubs = new Set(areas.map((a) => a.club));
+areas.forEach((row, i) => {
+  const line = i + 2;
+  if (!row.club) fail("_data/field_areas.csv", line, "This row has no club. Every row needs a club name in the first column.");
+  else if (!clubNames.has(row.club)) {
+    fail("_data/field_areas.csv", line, `The club "${row.club}" is not listed in _data/clubs.csv. Check the spelling — it must match the club's name there exactly.`);
+  }
+});
 fields.forEach((row, i) => {
   const line = i + 2;
   if (!row.name) fail("_data/fields.csv", line, "This field has no name.");
-  if (!row.area) fail("_data/fields.csv", line, "This field has no area. The area groups fields under a heading, for example: Canby");
-  else if (!areaNames.has(row.area)) {
-    fail("_data/fields.csv", line, `The area "${row.area}" is not listed in _data/field_areas.csv, so this field would not appear on the page. Add it there, or correct the spelling.`);
+  if (!row.club) fail("_data/fields.csv", line, "This field has no club. The club groups fields under a heading, for example: Canby United Soccer Association");
+  else if (!clubNames.has(row.club)) {
+    fail("_data/fields.csv", line, `The club "${row.club}" is not listed in _data/clubs.csv. Check the spelling — it must match the club's name there exactly.`);
+  } else if (!areaClubs.has(row.club)) {
+    fail("_data/fields.csv", line, `The club "${row.club}" is not listed in _data/field_areas.csv, so this field would not appear on the page. Add it there, or correct the spelling.`);
   }
   if (row.map_url && !isUrl(row.map_url)) fail("_data/fields.csv", line, `"${row.map_url}" is not a complete web address.`);
 });
+
+// A field with no coordinates is left off the map but still listed with its
+// address, so this is a warning, not a failure: adding a field should never
+// stop the site from publishing. A developer clears it by running
+// scripts/geocode-fields.js and committing _data/field_coordinates.json.
+const coordinates = fs.existsSync("_data/field_coordinates.json")
+  ? JSON.parse(fs.readFileSync("_data/field_coordinates.json", "utf8"))
+  : {};
+const unmapped = fields.filter(
+  (row) => !(row.lat && row.lon) && !coordinates[`${row.club}|${row.name}`],
+);
 
 const uniforms = readCsv("_data/uniforms.csv", ["club", "jerseys", "colors"]);
 uniforms.forEach((row, i) => {
@@ -164,6 +186,12 @@ uniforms.forEach((row, i) => {
 });
 
 // --------------------------------------------------------------- report
+
+if (unmapped.length) {
+  console.warn(`Note: ${unmapped.length} field${unmapped.length === 1 ? " has" : "s have"} no map position yet, so ${unmapped.length === 1 ? "it" : "they"} will be listed but not shown on the map:`);
+  for (const row of unmapped) console.warn(`  ${row.club} — ${row.name}`);
+  console.warn("A developer can add the missing position; see CONTRIBUTING-DEV.md.\n");
+}
 
 if (problems.length === 0) {
   console.log(`Checked ${pageFiles.length} pages, ${clubs.length} clubs, ${fields.length} fields, ${uniforms.length} uniform rows. Everything looks right.`);

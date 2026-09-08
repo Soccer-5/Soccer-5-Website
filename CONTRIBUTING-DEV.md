@@ -122,6 +122,55 @@ syntax in a file volunteers edit, which the whole design is trying to avoid.
 Adding a new table means: a partial in `src/_includes/partials/`, a line in
 `page.njk`, and the name added to `DATA_SECTIONS` in `scripts/validate.js`.
 
+### The field map
+
+`/fields` opens with an SVG map of every field, drawn at build time by
+`src/field-map.js` and registered as the `leagueMap` shortcode. Nothing about
+it runs in the browser: each pin is an ordinary `<a>` to that field's entry in
+the list below, and the label on hover is CSS. It ships as markup inside
+`fields.html`, so there is no extra request and nothing to load.
+
+Two inputs feed it, and both are committed:
+
+**`_data/field_coordinates.json`** — the geocoded position of each field,
+keyed by `club|name`. It is written by a developer running
+
+```bash
+node scripts/geocode-fields.js
+```
+
+which looks up only the fields it has no position for. `--refresh` re-does all
+of them. It reads the `address` column, asks Nominatim (rate-limited to one
+request a second, as their policy requires), and records the address it
+searched and the address that matched, so a wrong pin shows up in the diff
+rather than silently on the map. Run it after a field is added or an address
+corrected, and commit the JSON with the CSV change.
+
+The build itself never touches the network — the plan's §1 constraint — so a
+field with no entry here is left off the map and still listed with its address.
+`validate.js` prints a warning naming it; it is not a build failure, because a
+volunteer adding a field should never be able to stop the site publishing.
+
+If geocoding gets one wrong, the escape hatch is the `lat` and `lon` columns in
+`fields.csv`. Put the correct coordinates there directly and commit — no script
+to run. A value in those columns wins outright over
+`field_coordinates.json`, and `geocode-fields.js` skips a row that already has
+both, so it will not overwrite your correction on a later run. `Mary S. Young
+State Park` uses this — OpenStreetMap calls it "Mary S. Young Park", so the
+address matched the middle of Willamette Drive a kilometre away.
+
+**`src/data/basemap.geojson`** — county outlines, primary and secondary roads,
+and rivers, from US Census TIGER/Line (public domain, no attribution required).
+88 KB, clipped to `-122.90,45.10,-122.28,45.50`, coordinates at 4 decimals.
+Every feature carries a `properties.layer` of `county`, `road` or `water`, which
+is the only thing the renderer looks at. Water arrives as polygons for the wide
+rivers and centrelines for the narrow ones, so both are handled.
+
+It should not need regenerating — the county has not moved — but if it does,
+the source files and `mapshaper` commands are in the plan (§9, Phase 5). If you
+change the clip box, change `DRAWN` in `src/field-map.js` to match, or the map
+will frame paper the basemap does not cover.
+
 ### Swapping to Google Sheets later
 
 The plan (§8) keeps this door open. The change is confined to one place:
