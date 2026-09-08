@@ -126,6 +126,13 @@ Same idea, in `_data`:
   This is where the dog policy and parking notes live. The `club` has to match
   `clubs.csv` here too.
 - **`uniforms.csv`** — one line per club: `club, jerseys, colors`
+  The colors are drawn on the page as jersey rectangles, so write them as plain
+  color names and nothing else — `red`, `white`, `navy blue`, `forest green`,
+  `gold`. A comma separates one jersey from the next, and a slash splits a
+  jersey that is two colors: `"green/white, gold"` is one green-and-white jersey
+  and one gold one. That cell contains a comma, so it needs quotation marks
+  around it. If you write a color the website cannot draw, it says so and names
+  the line, and the live site is left alone until it is fixed.
 
 The same three rules as the club list apply: keep the first line, quote
 anything containing a comma, leave unknown values empty.

@@ -1,4 +1,6 @@
-{# Renders _data/uniforms.csv. #}
+{# Renders _data/uniforms.csv. The swatches are built from the same `colors`
+   text that is printed beside them — see src/uniform-swatches.js. The names
+   stay on the page: colour alone must never be the only way to read a row. #}
 <table class="uniform-table">
   <thead>
     <tr><th scope="col">Club</th><th scope="col">Jerseys</th><th scope="col">Colors</th></tr>
@@ -8,7 +10,10 @@
     <tr>
       <th scope="row">{{ row.club }}</th>
       <td>{{ row.jerseys }}</td>
-      <td>{{ row.colors }}</td>
+      <td class="uniform-colors">
+        {{ row.colors | jerseySwatches | safe }}
+        <span class="uniform-colors__names">{{ row.colors }}</span>
+      </td>
     </tr>
     {%- endfor %}
   </tbody>

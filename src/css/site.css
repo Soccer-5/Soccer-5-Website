@@ -549,6 +549,62 @@ body {
   vertical-align: top;
 }
 
+/* Jersey swatches. The colour arrives as --jersey-a / --jersey-b on the
+   element, set by src/uniform-swatches.js from the names in uniforms.csv;
+   everything else about the rectangle is decided here.
+
+   One rule draws both kinds. A jersey the volunteer wrote as a single colour
+   gets the same value in both properties, so the hard-stop gradient is a flat
+   fill and there is no second case to keep in step.
+
+   The border is --color-ink rather than --color-carbon because tokens.css
+   reserves pure black for filled buttons; at 2px on a white jersey the two are
+   indistinguishable, and a border is what makes a white or gold jersey read as
+   a jersey on this cream page rather than as a hole in it. */
+
+/* Deliberately not wrapping. A table column is sized from its content, so
+   letting the pair wrap tells the browser one swatch is width enough and it
+   hands the column too little — the swatches then wrap for good, and shrinking
+   them only makes the column narrower still. Refusing to wrap puts both in the
+   column's minimum width, which is what makes the table allocate room for
+   them. Safe because a row never holds more than two: validate.js rejects a
+   colors cell whose jersey count disagrees with the jerseys column, which only
+   accepts single or two. */
+.jerseys {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+
+.jersey {
+  width: 76px;
+  height: 52px;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius);
+  background: linear-gradient(
+    135deg,
+    var(--jersey-a) 0 50%,
+    var(--jersey-b) 50% 100%
+  );
+}
+
+/* On a 375px phone the Colors column gives the swatches 123px to sit in, so a
+   pair at full size wraps and every two-jersey row doubles in height. These
+   still read as jerseys at a glance, which is all they are for; the size the
+   table was designed around is the one above. */
+@media (max-width: 600px) {
+  .jersey {
+    width: 56px;
+    height: 38px;
+  }
+}
+
+.uniform-colors__names {
+  display: block;
+  color: var(--color-iron);
+}
+
 .uniform-table thead th {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
