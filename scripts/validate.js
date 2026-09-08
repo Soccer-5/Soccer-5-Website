@@ -10,6 +10,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import { parse } from "csv-parse/sync";
 import { LEGACY_PAGES } from "./legacy-urls.js";
+import { parseJerseys } from "../src/uniform-swatches.js";
 
 const problems = [];
 const fail = (file, line, message) =>
@@ -181,8 +182,40 @@ const unmapped = fields.filter(
 );
 
 const uniforms = readCsv("_data/uniforms.csv", ["club", "jerseys", "colors"]);
+const JERSEY_COUNTS = { single: 1, two: 2 };
 uniforms.forEach((row, i) => {
-  if (!row.club) fail("_data/uniforms.csv", i + 2, "This row has no club name.");
+  const line = i + 2;
+  if (!row.club) fail("_data/uniforms.csv", line, "This row has no club name.");
+
+  // The colours are drawn as rectangles on the page, so a word nothing can be
+  // coloured with has to be caught here rather than silently drawing nothing.
+  const jerseys = parseJerseys(row.colors);
+  for (const jersey of jerseys) {
+    for (const part of jersey.parts) {
+      if (part.css) continue;
+      fail(
+        "_data/uniforms.csv",
+        line,
+        `"${part.written}" is not a colour this website knows how to draw, so this club's jersey would be missing from the page. Use a plain colour name such as red, white, black, navy blue, royal blue, forest green, gold or orange. Two jerseys are separated by a comma ("red, white"); a jersey that is two colours uses a slash ("green/white").`,
+      );
+    }
+  }
+
+  // "two" next to one colour contradicts itself, and now that the colours are
+  // drawn the reader sees the contradiction: the word says two, the page shows
+  // one rectangle.
+  const expected = JERSEY_COUNTS[String(row.jerseys || "").toLowerCase()];
+  if (expected === undefined) {
+    if (row.jerseys) {
+      fail("_data/uniforms.csv", line, `"${row.jerseys}" is not one of the words this column takes. Write either single or two.`);
+    }
+  } else if (jerseys.length && jerseys.length !== expected) {
+    fail(
+      "_data/uniforms.csv",
+      line,
+      `This row says "${row.jerseys}" but lists ${jerseys.length} jersey${jerseys.length === 1 ? "" : "s"} in the colors column ("${row.colors}"). Separate two jerseys with a comma and a jersey's own two colours with a slash — "green/white, gold" is one green-and-white jersey and one gold one.`,
+    );
+  }
 });
 
 // --------------------------------------------------------------- report

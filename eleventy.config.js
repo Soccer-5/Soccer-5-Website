@@ -7,6 +7,7 @@
 import { HtmlBasePlugin } from "@11ty/eleventy";
 import { parse } from "csv-parse/sync";
 import { leagueMap, slugify } from "./src/field-map.js";
+import { jerseySwatches } from "./src/uniform-swatches.js";
 
 export default function (eleventyConfig) {
   // Rewrites root-relative URLs in the built HTML to include pathPrefix, so
@@ -59,9 +60,14 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("slug", slugify);
   eleventyConfig.addShortcode("leagueMap", leagueMap);
 
-  // Rebuild the page when the map's inputs change, not just its templates.
+  // The jersey rectangles on /uniforminfo, drawn from the colour names a
+  // volunteer types in _data/uniforms.csv. See src/uniform-swatches.js.
+  eleventyConfig.addFilter("jerseySwatches", jerseySwatches);
+
+  // Rebuild the page when these inputs change, not just their templates.
   eleventyConfig.addWatchTarget("src/data/basemap.geojson");
   eleventyConfig.addWatchTarget("src/field-map.js");
+  eleventyConfig.addWatchTarget("src/uniform-swatches.js");
 
   eleventyConfig.setInputDirectory(".");
   eleventyConfig.setOutputDirectory("_site");
